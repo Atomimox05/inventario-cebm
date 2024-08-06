@@ -2,13 +2,13 @@
 <?php include ('../config/NavBar.php'); ?>
 
     <section class="mt-5">
-        <h3 class="text-center">Usuarios</h3>
+        <h3 class="text-center">Gestión de usuarios</h3>
         <div class="container d-flex justify-content-end mt-4">
             <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">
                 Crear nuevo usuario
             </button>
         </div>
-        <div class="container d-flex justify-content-center mt-4">
+        <div class="container d-flex justify-content-center text-center mt-3">
             <table class="table table-hover mt-3">
                 <thead>
                     <tr>
@@ -40,7 +40,7 @@
                         <td><?php echo($row[8]); ?></td>
                         <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else { echo("Analista"); } ?></td>
                         <td>
-                            <button class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">Editar</button>
+                            <a href="../services/users/edit_user.php" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">Editar</a>
                             <button class="btn btn-sm btn-danger">Deshabilitar</button>
                             <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button>
                         </td>
@@ -62,19 +62,19 @@
                     <form action="../services/users/save_user.php" method="POST" class="row g-2" autocomplete="off">
                         <div class="col-sm-6">
                             <label for="name" class="form-label">Nombre</label>
-                            <input class="form-control" type="text" name="nombre" id="name" maxlength="40" required>
+                            <input class="form-control" type="text" name="nombre" id="name" maxlength="40" placeholder="Ingrese su nombre" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="apellido">Apellido</label>
-                            <input class="form-control" type="text" name="apellido" maxlength="40" id="apellido" required>
+                            <input class="form-control" type="text" name="apellido" maxlength="40" id="apellido" placeholder="Ingrese su apellido" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="ci">Cédula de identidad</label>
-                            <input  class="form-control" name="ci" id="ci" maxlength="8" required>
+                            <input  class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="carnet">N° de carnet</label>
-                            <input class="form-control" type="text" name="n_carnet" id="carnet" maxlength="6" required>
+                            <input class="form-control" type="text" name="n_carnet" id="carnet" placeholder="0000-00" maxlength="7">
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="rol">Perfil</label>
@@ -101,14 +101,14 @@
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="user">Usuario</label>
-                            <input class="form-control" type="text" name="username" id="user" maxlength="30" required>
+                            <input class="form-control" type="text" name="username" id="user" placeholder="Ingrese su usuario" maxlength="30" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="password">Contraseña</label>
-                            <input class="form-control" type="password" name="password" maxlength="20" id="password" required>
+                            <input class="form-control" type="password" name="password" placeholder="Ingrese su contraseña" maxlength="20" id="password" required>
                         </div>
                         <div class="d-grid gap-2 mt-4">
-                            <input class="btn btn-primary" type="submit" value="Registrar">
+                            <input class="btn btn-primary" type="submit" value="Registrar usuario">
                         </div>
                     </form>
                 </div>
