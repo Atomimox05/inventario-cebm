@@ -1,3 +1,10 @@
+<?php
+    session_start();
+
+    if(!isset($_SESSION['id'])){
+        header('location: ../index.php');
+    }
+?>
 <?php include ('../config/Header.php'); ?>
 <?php include ('../config/NavBar.php'); ?>
 
@@ -18,7 +25,7 @@
                         <th scope="col">C.I.</th>
                         <th scope="col">N° Carnet</th>
                         <th scope="col">Usuario</th>
-                        <th scope="col">Perfil</th>
+                        <th scope="col">Rol</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -40,9 +47,9 @@
                         <td><?php echo($row[8]); ?></td>
                         <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else { echo("Analista"); } ?></td>
                         <td>
-                            <a href="editUser.php?id=<?php echo($row[0]);?>" class="btn btn-sm btn-warning text-white">Editar</a>
+                            <a href="editUser.php?id=<?php echo($row[0]);?>" class="btn btn-sm btn-dark">Editar</a>
                             <button class="btn btn-sm btn-danger">Deshabilitar</button>
-                            <!-- <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button> -->
+                            <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button>
                         </td>
                     </tr>
                     <?php $contador++; } ?>

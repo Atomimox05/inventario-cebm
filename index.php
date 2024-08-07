@@ -1,6 +1,3 @@
-<?php
-    include_once('config/conex.php');
-?>
 <!doctype html>
     <html lang="es">
     <head>
@@ -25,20 +22,23 @@
                             </div>
                             <div class="col-sm-6">
                                 <h4 class="text-center fw-bold text-danger mb-3">Iniciar <span class="text-dark-emphasis">Sesión</span></h4>
-                                <!-- <form method="post" action="/services/login.php" autocomplete="off"> -->
+                                <form method="POST" action="services/login.php" autocomplete="off">
                                     <div class="mb-3">
                                         <label for="user" class="form-label">Usuario</label>
                                         <input class="form-control" type="text" name="user" id="user" placeholder="Ingrese su usuario" autofocus>
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Contraseña</label>
-                                        <input class="form-control" type="password" name="password" id="password" placeholder="Ingrese su contraseña">
+                                        <input class="form-control" type="password" name="password" id="password" placeholder="Ingrese su contraseña" aria-describedby="passwordHelpBlock">
+                                    </div>
+                                    <div id="passwordHelpBlock" class="form-text">
+                                        Mensaje de error
                                     </div>
                                     <div class="d-grid gap-2 mt-4">
-                                        <!-- <input type="submit" class="btn btn-dark" value="Ingresar"> -->
-                                        <a href="pages/movimientos.php" class="btn btn-dark">Ingresar</a>
+                                        <input type="submit" class="btn btn-dark" value="Ingresar">
+                                        <!-- <a href="pages/movimientos.php" class="btn btn-dark">Ingresar</a> -->
                                     </div>
-                                <!-- </form> -->
+                                </form>
                             </div>
                         </div>
                     </div>
