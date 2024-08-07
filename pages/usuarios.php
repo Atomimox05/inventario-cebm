@@ -40,9 +40,9 @@
                         <td><?php echo($row[8]); ?></td>
                         <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else { echo("Analista"); } ?></td>
                         <td>
-                            <a href="../services/users/edit_user.php" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">Editar</a>
+                            <a href="editUser.php?id=<?php echo($row[0]);?>" class="btn btn-sm btn-warning text-white">Editar</a>
                             <button class="btn btn-sm btn-danger">Deshabilitar</button>
-                            <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button>
+                            <!-- <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button> -->
                         </td>
                     </tr>
                     <?php $contador++; } ?>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="ci">Cédula de identidad</label>
-                            <input  class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" required>
+                            <input  class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" disabled>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="carnet">N° de carnet</label>
@@ -90,12 +90,12 @@
                             <select class="form-select" name="departamento" id="departamento" required>
                                 <option selected disabled>Seleccione...</option>
                                 <?php
-                                require('../config/conex.php');
+                                    require('../config/conex.php');
 
-                                $res = mysqli_query($conn, "SELECT * FROM departamento");
-                                while($row = mysqli_fetch_array($res)){
-                                ?>
-                                <option value="<?php echo($row[0]); ?>"><?php echo($row[1]); ?></option>
+                                    $res = mysqli_query($conn, "SELECT * FROM departamento");
+                                    while($row = mysqli_fetch_array($res)){
+                                    ?>
+                                    <option value="<?php echo($row[0]); ?>"><?php echo($row[1]); ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -108,7 +108,7 @@
                             <input class="form-control" type="password" name="password" placeholder="Ingrese su contraseña" maxlength="20" id="password" required>
                         </div>
                         <div class="d-grid gap-2 mt-4">
-                            <input class="btn btn-primary" type="submit" value="Registrar usuario">
+                            <input class="btn btn-dark" type="submit" value="Registrar usuario">
                         </div>
                     </form>
                 </div>

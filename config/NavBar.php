@@ -3,7 +3,7 @@
         <div class="container">
             <span class="navbar-brand">
                 <img src="../src/assets/Logo-CEBM-270x270.png" style="height: 68px;" alt="Logo CEBM" class="d-inline-block align-text-center me-2">
-                Control de bienes muebles - CEMB
+                Control de bienes muebles - CEBM
             </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

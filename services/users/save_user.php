@@ -16,5 +16,6 @@
         die("Query Failed.");
     } else {
         header('location: ../../pages/usuarios.php');
+        echo('');
     }
 ?>
