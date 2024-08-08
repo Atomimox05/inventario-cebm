@@ -58,6 +58,17 @@
         </div>
     </section>
 
+    <?php if(isset($_GET['alert_msg'])): ?>
+    <footer class="container fixed-bottom absolute-bottom">
+        <article class="d-flex justify-content-end mb-4">
+            <div class="alert alert-<?php echo $_GET['alert_type']; ?> alert-dismissible fade show shadow" role="alert">
+                <?php echo $_GET['alert_msg']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </article>
+    </footer>
+    <?php endif; ?>
+
     <div class="modal fade" id="usuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -77,14 +88,14 @@
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="ci">Cédula de identidad</label>
-                            <input  class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" disabled>
+                            <input  class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="carnet">N° de carnet</label>
                             <input class="form-control" type="text" name="n_carnet" id="carnet" placeholder="0000-00" maxlength="7">
                         </div>
                         <div class="col-sm-6">
-                            <label class="form-label" for="rol">Perfil</label>
+                            <label class="form-label" for="rol">Rol</label>
                             <select class="form-select" name="rol" id="rol" required>
                                 <option selected disabled>Seleccione...</option>
                                 <option value="0">Administrador</option>
@@ -107,7 +118,7 @@
                             </select>
                         </div>
                         <div class="col-sm-6">
-                            <label class="form-label" for="user">Usuario</label>
+                            <label class="form-label" for="user">Nombre de usuario</label>
                             <input class="form-control" type="text" name="username" id="user" placeholder="Ingrese su usuario" maxlength="30" required>
                         </div>
                         <div class="col-sm-6">

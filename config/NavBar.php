@@ -1,3 +1,15 @@
+<?php
+    session_start();
+
+    if(!isset($_SESSION['id'])){
+        header('Location: ../index.php');
+    }
+
+    $nombre = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+    $rol = $_SESSION['rol'];
+?>
+
 <header>
     <nav class="navbar navbar-expand-md bg-warning-subtle p-3">
         <div class="container">
@@ -21,8 +33,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="usuarios.php">Usuarios</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="../services/logout.php">Salir</a>
+                            <li class="nav-item dropdown">
+                                <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <?php echo $nombre.' '.$apellido; ?>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="../services/logout.php">Cerrar sesión</a></li>
+                                </ul>
                             </li>
                         </ul>
                     </div>
