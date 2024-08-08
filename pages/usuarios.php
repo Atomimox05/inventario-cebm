@@ -36,7 +36,8 @@
 
                         $res = mysqli_query($conn, "SELECT * FROM usuarios");
 
-                        while($row = mysqli_fetch_array($res)){ 
+                        while($row = mysqli_fetch_array($res)){
+                            if($row[7] != 1){ 
                     ?>           
                     <tr>
                         <td><?php echo($contador); ?></td>
@@ -52,7 +53,7 @@
                             <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button>
                         </td>
                     </tr>
-                    <?php $contador++; } ?>
+                    <?php $contador++; }} ?>
                 </tbody>
             </table>
         </div>
