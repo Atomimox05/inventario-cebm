@@ -1,5 +1,6 @@
 <?php
     session_start();
+    $idPass = 0;
 
     if(!isset($_SESSION['id'])){
         header('location: ../index.php');
@@ -48,9 +49,9 @@
                         <td><?php echo($row[8]); ?></td>
                         <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else { echo("Analista"); } ?></td>
                         <td>
-                            <a href="editUser.php?id=<?php echo($row[0]);?>" class="btn btn-sm btn-dark">Editar</a>
-                            <button class="btn btn-sm btn-danger">Deshabilitar</button>
-                            <button class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#usuario">Cambiar contraseña</button>
+                            <a href="editUser.php?id=<?php echo($row[0]);?>&op=e" class="btn btn-sm btn-dark">Editar</a>
+                            <button class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo($row[0]);?>)">Deshabilitar</button>
+                            <a href="editUser.php?id=<?php echo($row[0]);?>&op=p" class="btn btn-sm btn-warning text-white">Cambiar contraseña</a>
                         </td>
                     </tr>
                     <?php $contador++; }} ?>
@@ -59,17 +60,22 @@
         </div>
     </section>
 
-    <?php if(isset($_GET['alert_msg'])): ?>
+    <?php if(isset($_SESSION['alert_msg'])): ?>
     <footer class="container fixed-bottom absolute-bottom">
         <article class="d-flex justify-content-end mb-4">
-            <div class="alert alert-<?php echo $_GET['alert_type']; ?> alert-dismissible fade show shadow" role="alert">
-                <?php echo $_GET['alert_msg']; ?>
+            <div class="alert alert-<?php echo $_SESSION['alert_type']; ?> alert-dismissible fade show shadow" role="alert">
+                <?php echo $_SESSION['alert_msg']; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </article>
     </footer>
-    <?php endif; ?>
+    <?php 
+        unset($_SESSION['alert_msg']);
+        unset($_SESSION['alert_type']);
+        endif;
+    ?>
 
+    <!-- Modal para crear nuevo usuario -->
     <div class="modal fade" id="usuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -133,6 +139,13 @@
                 </div>
             </div>
         </div>
-</div>
+    </div>
+    <script>
+            const confirmDisable = (userId) => {
+                if (confirm("¿Estás seguro de que quieres deshabilitar este usuario?. Esta acción no se puede deshacer.")) {
+                    window.location.href = "../services/users/deshabilitar_user.php?id=" + userId;
+                }
+            }
+    </script>
 
 <?php include ('../config/FooterHtml.php'); ?>

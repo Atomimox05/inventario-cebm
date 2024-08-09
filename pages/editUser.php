@@ -3,6 +3,8 @@
 <?php
     require('../config/conex.php');
     $id = $_GET['id'];
+    $op = $_GET['op'];
+    
     $query = "SELECT * FROM usuarios WHERE id = $id";
     $result = mysqli_query($conn, $query);
     $user = mysqli_fetch_array($result);

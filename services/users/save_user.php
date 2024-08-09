@@ -28,7 +28,9 @@
             $alert_msg = "Error al registrar el usuario.";
         }
 
-        header("Location: ../../pages/usuarios.php?alert_type=$alert_type&alert_msg=" . urlencode($alert_msg));
+        $_SESSION['alert_type'] = $alert_type;
+        $_SESSION['alert_msg'] = $alert_msg;
+        header("Location: ../../pages/usuarios.php");
         exit();
     }
 ?>
