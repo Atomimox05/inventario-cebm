@@ -2,6 +2,7 @@
 <?php include ('../config/NavBar.php'); ?>
 <?php
     require('../config/conex.php');
+
     $id = $_GET['id'];
     $op = $_GET['op'];
     
@@ -11,8 +12,19 @@
 ?>
 
 <section class="mt-5">
-    <h3 class="text-center">Editar usuario</h3>
-    <div class="container d-flex justify-content-end mt-5">
+    <h3 class="text-center">
+        <?php
+            if($op === 'e'){
+                echo("Editar usuario");
+            } else if ($op === 'p'){
+                echo("Cambiar contraseña");
+            }
+        ?>
+    </h3>
+    <div class="container d-flex justify-content-center mt-5">
+        <?php
+            if($op === 'e'){
+        ?>
         <form action="../services/users/edit_user.php" method="POST" class="row g-2" autocomplete="off">
             <input type="hidden" name="id" value="<?php echo($id)?>">
             <div class="col-sm-6">
@@ -105,5 +117,25 @@
                 <input class="btn btn-dark" type="submit" value="Editar datos del usuario">
             </div>
         </form>
+        <?php
+            } elseif($op === 'p'){
+        ?>
+        <form action="../services/users/change_pass.php" method="POST" class="row g-2" autocomplete="off">
+            <input type="hidden" name="id" value="<?php echo($id)?>">
+            <div class="col-sm-6">
+                <label for="password" class="form-label">Nueva contraseña</label>
+                <input class="form-control" type="password" id="password" name="password" placeholder="Contraseña" required>
+            </div>
+            <div class="col-sm-6">
+                <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirmar contraseña" required>
+            </div>
+            <div class="d-grid gap-2 mt-4">
+                <input class="btn btn-dark" type="submit" value="Cambiar contraseña">
+            </div>
+        </form>
+        <?php
+            }
+        ?>
     </div>
 </section>
