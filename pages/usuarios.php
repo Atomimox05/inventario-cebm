@@ -47,7 +47,7 @@
                         <td><?php echo($row[3]); ?></td>
                         <td><?php echo($row[4]); ?></td>
                         <td><?php echo($row[8]); ?></td>
-                        <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else { echo("Analista"); } ?></td>
+                        <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else if ($row[6] == 2) { echo("Analista"); } else if ($row[6] == 3) { echo("Seguridad"); } ?></td>
                         <td>
                             <a href="editUser.php?id=<?php echo($row[0]);?>&op=e" class="btn btn-sm btn-dark">Editar</a>
                             <button class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo($row[0]);?>)">Deshabilitar</button>
@@ -108,6 +108,7 @@
                                 <option value="0">Administrador</option>
                                 <option value="1">Coordinador</option>
                                 <option value="2">Analista</option>
+                                <option value="3">Seguridad</option>
                             </select>
                         </div>
                         <div class="col-sm-6">

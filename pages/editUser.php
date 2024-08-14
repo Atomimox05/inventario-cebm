@@ -58,6 +58,7 @@
                                 <option selected value="0">Administrador</option>
                                 <option value="1">Coordinador</option>
                                 <option value="2">Analista</option>
+                                <option value="3">Seguridad</option>
                                 <?php
                                 break;
 
@@ -67,6 +68,7 @@
                                 <option value="0">Administrador</option>
                                 <option selected value="1">Coordinador</option>
                                 <option value="2">Analista</option>
+                                <option value="3">Seguridad</option>
                                 <?php
                                 break;
 
@@ -76,15 +78,26 @@
                                 <option value="0">Administrador</option>
                                 <option value="1">Coordinador</option>
                                 <option selected value="2">Analista</option>
+                                <option value="3">Seguridad</option>
                                 <?php
                                 break;
-                            
+
+                            case '3':
+                                ?>
+                                <option disabled>Seleccione...</option>
+                                <option value="0">Administrador</option>
+                                <option value="1">Coordinador</option>
+                                <option value="2">Analista</option>
+                                <option selected value="3">Seguridad</option>
+                                <?php
+                                break;
                             default:
                                 ?>
                                 <option selected disabled>Seleccione...</option>
                                 <option value="0">Administrador</option>
                                 <option value="1">Coordinador</option>
                                 <option value="2">Analista</option>
+                                <option value="3">Seguridad</option>
                                 <?php
                                 break;
                         }
