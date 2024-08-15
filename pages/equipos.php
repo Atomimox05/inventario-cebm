@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="container d-flex justify-content-center mt-4">
+        <div class="container d-flex justify-content-center mt-5">
             <table class="table table-hover text-center">
                 <thead>
                     <tr>
@@ -36,28 +36,54 @@
                         <th scope="col">N° de bien</th>
                         <th scope="col">Disponibilidad</th>
                         <th scope="col">Estatus</th>
-                        <th scope="col">Último mantenimiento</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                <?php
+                    $contador = 1;
+                    require('../config/conex.php');
+
+                    $res = mysqli_query($conn, "SELECT * FROM equipos");
+
+                    while($row = mysqli_fetch_array($res)){
+                        if($row[6] != 1){ 
+                    ?>    
                     <tr>
-                        <td>1</td>
-                        <td>Laptop HP</td>
-                        <td>Laptop HP Latitude Intel core i7 6800 8GB 256GB SSD</td>
-                        <td>0-2345</td>
-                        <td>Disponible</td>
-                        <td>Excelentes condiciones</td>
-                        <td>2024-05-27</td>
+                        <td><?php echo($contador); ?></td>
+                        <td><?php echo($row[1]); ?></td>
+                        <td><?php echo($row[2]); ?></td>
+                        <td><?php echo($row[3]); ?></td>
+                        <td>
+                        <?php 
+                            if($row[4] == 0){ 
+                                echo("Disponible"); 
+                            } else { 
+                                echo("No disponible"); 
+                            }
+                        ?>
+                        </td>
+                        <td>
+                        <?php
+                            switch($row[5]){
+                                case 0: echo("Excelentes condiciones"); break;
+                                case 1: echo("Buenas condiciones"); break;
+                                case 2: echo("Condiciones regulares"); break;
+                                case 3: echo("Malas condiciones"); break;
+                            }
+                        ?>
+                        </td>
                         <td>
                             <div class="d-flex gap-2">
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-sm btn-dark">Editar</button>
+                                    <a href="editEquipo.php?id=<?php echo($row[0]); ?>" type="button" class="btn btn-sm btn-dark">Editar</a>
                                     <button type="button" class="btn btn-sm btn-danger">Desincorporar</button>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#mantenimiento">Mantenimiento</button>
+                                <button type="button" class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#mantenimiento">Mantenimientos</button>
                             </div>
                         </td>
+                    </tr>
+                    <?php $contador++; }} ?>
                 </tbody>
             </table>
         </div>
@@ -87,28 +113,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="../services/equipos/create_equipo.php" class="row g-2">
+                    <form method="POST" action="../services/equipos/create_equipo.php" class="row g-2" autocomplete="off">
                         <input type="hidden" name="activo" value="0">
                         <div class="col-sm-6">
                             <label for="name" class="form-label">Nombre del equipo</label>
-                            <input class="form-control" type="text" name="equipo" id="name" maxlength="80" required>
+                            <input class="form-control" type="text" name="equipo" id="name" maxlength="80" placeholder="Nombre del equipo" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="description">Descripción</label>
-                            <input class="form-control" type="text" name="descripcion" id="description" required>
+                            <input class="form-control" type="text" name="descripcion" id="description" placeholder="Modelo, marca, componentes" required>
                         </div>
                         <div class="col-sm-6">
                             <label for="bien" class="form-label">N° de bien</label>
-                            <input type="text" class="form-control" name="n_bien" id="bien" maxlength="6" required>
+                            <input type="text" class="form-control" name="n_bien" id="bien" maxlength="8" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="status">Estatus</label>
                             <select class="form-control" name="estatus" id="status" required>
                                 <option selected disabled>Seleccione...</option>
-                                <option value="1">Excelentes condiciones</option>
-                                <option value="2">Buenas condiciones</option>
-                                <option value="3">Condiciones regulares</option>
-                                <option value="4">Malas condiciones</option>
+                                <option value="0">Excelentes condiciones</option>
+                                <option value="1">Buenas condiciones</option>
+                                <option value="2">Condiciones regulares</option>
+                                <option value="3">Malas condiciones</option>
                             </select>
                         </div>
                         <div class="d-grid gap-2 mt-4">
@@ -119,32 +145,6 @@
             </div>
         </div>
     </article>
-
-    <!-- <article class="modal fade" id="equipo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar nuevo equipo</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" class="row g-2">
-                        <div class="col-sm-6">
-                            <label for="name" class="form-label">Nombre del equipo</label>
-                            <input class="form-control" type="text" name="name" id="name">
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="form-label" for="description">Descripción</label>
-                            <input class="form-control" type="text" name="description" id="description">
-                        </div>
-                        <div class="d-grid gap-2 mt-4">
-                            <input class="btn btn-primary" type="submit" value="Registrar equipo">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </article> -->
 
     <article class="modal fade" id="mantenimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

@@ -1,5 +1,5 @@
 <?php
-    include("../../config/conexion.php");
+    include("../../config/conex.php");
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $equipo = $_POST['equipo'];
