@@ -11,10 +11,15 @@
 
     <section class="mt-5">
         <h3 class="text-center">Gestión de usuarios</h3>
-        <div class="container d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">
-                Crear nuevo usuario
-            </button>
+        <div class="container mt-5">
+            <div class="d-flex row justify-content-end">
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">
+                        Crear nuevo usuario
+                    </button>
+                    <button type="button" class="btn btn-secondary">Departamentos</button>
+                </div>
+            </div>
         </div>
         <div class="container d-flex justify-content-center text-center mt-3">
             <table class="table table-hover mt-3">

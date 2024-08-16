@@ -77,7 +77,7 @@
                             <div class="d-flex gap-2">
                                 <div class="btn-group" role="group">
                                     <a href="editEquipo.php?id=<?php echo($row[0]); ?>" type="button" class="btn btn-sm btn-dark">Editar</a>
-                                    <button type="button" class="btn btn-sm btn-danger">Desincorporar</button>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo($row[0]);?>)">Desincorporar</button>
                                 </div>
                                 <button type="button" class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#mantenimiento">Mantenimientos</button>
                             </div>
@@ -171,5 +171,13 @@
             </div>
         </div>
     </article>
+
+    <script>
+        const confirmDisable = (equipo_id) => {
+            if (confirm("¿Está seguro de que quiere desincorporar este equipo del inventario? Esta acción no se puede deshacer.")) {
+                window.location.href = "../services/equipos/deshabilitar_equipo.php?id=" + equipo_id;
+            }
+        }
+    </script>
 
     <?php include ('../config/FooterHtml.php'); ?>

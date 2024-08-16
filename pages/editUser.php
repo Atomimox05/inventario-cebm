@@ -58,56 +58,12 @@
             <div class="col-sm-4">
                 <label class="form-label" for="rol">Perfil</label>
                 <select class="form-select" name="rol" id="rol" required>
+                    <option disabled>Seleccione...</option>
                     <?php
-                        switch ($user[6]) {
-                            case '0':
-                                ?>
-                                <option disabled>Seleccione...</option>
-                                <option selected value="0">Administrador</option>
-                                <option value="1">Coordinador</option>
-                                <option value="2">Analista</option>
-                                <option value="3">Seguridad</option>
-                                <?php
-                                break;
-
-                            case '1':
-                                ?>
-                                <option disabled>Seleccione...</option>
-                                <option value="0">Administrador</option>
-                                <option selected value="1">Coordinador</option>
-                                <option value="2">Analista</option>
-                                <option value="3">Seguridad</option>
-                                <?php
-                                break;
-
-                            case '2':
-                                ?>
-                                <option disabled>Seleccione...</option>
-                                <option value="0">Administrador</option>
-                                <option value="1">Coordinador</option>
-                                <option selected value="2">Analista</option>
-                                <option value="3">Seguridad</option>
-                                <?php
-                                break;
-
-                            case '3':
-                                ?>
-                                <option disabled>Seleccione...</option>
-                                <option value="0">Administrador</option>
-                                <option value="1">Coordinador</option>
-                                <option value="2">Analista</option>
-                                <option selected value="3">Seguridad</option>
-                                <?php
-                                break;
-                            default:
-                                ?>
-                                <option selected disabled>Seleccione...</option>
-                                <option value="0">Administrador</option>
-                                <option value="1">Coordinador</option>
-                                <option value="2">Analista</option>
-                                <option value="3">Seguridad</option>
-                                <?php
-                                break;
+                        $roles = ["Administrador", "Coordinador", "Analista", "Seguridad"];
+                        foreach($roles as $key => $role){
+                            $selected = ($user[6] == $key) ? "selected" : "";
+                            echo("<option value='$key' $selected>$role</option>");
                         }
                     ?>
                 </select>
@@ -160,3 +116,5 @@
         ?>
     </div>
 </section>
+
+<?php include ('../config/FooterHtml.php'); ?>

@@ -15,7 +15,7 @@
     
     $query = "SELECT * FROM equipos WHERE id = $id";
     $result = mysqli_query($conn, $query);
-    $user = mysqli_fetch_array($result);
+    $equipo = mysqli_fetch_array($result);
 ?>
 
 <section class="mt-5">
@@ -25,24 +25,27 @@
             <input type="hidden" name="id" value="<?php echo($id)?>">
             <div class="col-sm-6">
                 <label for="name" class="form-label">Nombre del equipo</label>
-                <input class="form-control" type="text" name="equipo" id="name" maxlength="80" placeholder="Nombre del equipo" required>
+                <input class="form-control" type="text" name="equipo" id="name" maxlength="80" value="<?php echo($equipo[1])?>" placeholder="Nombre del equipo" required>
             </div>
             <div class="col-sm-6">
                 <label class="form-label" for="description">Descripción</label>
-                <input class="form-control" type="text" name="descripcion" id="description" placeholder="Modelo, marca, componentes" required>
+                <input class="form-control" type="text" name="descripcion" id="description" maxlength="80" value="<?php echo($equipo[2])?>" placeholder="Modelo, marca, componentes" required>
             </div>
             <div class="col-sm-6">
                 <label for="bien" class="form-label">N° de bien</label>
-                <input type="text" class="form-control" name="n_bien" id="bien" maxlength="8" required>
+                <input type="text" class="form-control" name="n_bien" id="bien" value="<?php echo($equipo[3])?>" maxlength="8" required>
             </div>
             <div class="col-sm-6">
                 <label class="form-label" for="status">Estatus</label>
                 <select class="form-control" name="estatus" id="status" required>
-                    <option selected disabled>Seleccione...</option>
-                    <option value="0">Excelentes condiciones</option>
-                    <option value="1">Buenas condiciones</option>
-                    <option value="2">Condiciones regulares</option>
-                    <option value="3">Malas condiciones</option>
+                    <option disabled>Seleccione...</option>
+                    <?php
+                        $estatus = ['Excelentes condiciones', 'Buenas condiciones', 'Condiciones regulares', 'Malas condiciones'];
+                        foreach($estatus as $key => $status){
+                            $selected = ($equipo[5] == $key) ? "selected" : "";
+                            echo("<option value='$key' $selected>$status</option>");
+                        }
+                    ?>
                 </select>
             </div>
             <div class="d-grid gap-2 mt-4">
@@ -51,3 +54,5 @@
         </form>
     </div>
 </section>
+
+<?php include ('../config/FooterHtml.php'); ?>
