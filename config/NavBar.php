@@ -13,7 +13,7 @@
 <header>
     <nav class="navbar navbar-expand-md bg-warning-subtle p-3">
         <div class="container">
-            <span class="navbar-brand">
+            <span class="navbar-brand text-muted">
                 <img src="../src/assets/Logo-CEBM-270x270.png" style="height: 68px;" alt="Logo CEBM" class="d-inline-block align-text-center me-2">
                 Control de bienes muebles - CEBM
             </span>

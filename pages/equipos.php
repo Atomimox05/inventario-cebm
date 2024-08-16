@@ -14,11 +14,13 @@
         <div class="container mt-5">
             <div class="d-flex row justify-content-between">
                 <div class="col-sm-8">
-                    <div class="input-group">
-                        <span class="input-group-text" id="basic-addon2">Buscar</span>
-                        <input type="search" class="form-control" placeholder="Nombre, descripción, n° de bien, estatus">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Consultar</button>
-                    </div>
+                    <form action="" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon2">Buscar</span>
+                            <input type="search" class="form-control" name="search" placeholder="Nombre, descripción o n° de bien">
+                            <input class="btn btn-warning text-light" type="submit" id="button-addon2" value="Consultar">
+                        </div>
+                    </form>
                 </div>
                 <div class="col-sm-4">
                     <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#equipo">Registar nuevo equipo</button> 
@@ -44,7 +46,14 @@
                     $contador = 1;
                     require('../config/conex.php');
 
-                    $res = mysqli_query($conn, "SELECT * FROM equipos");
+                    if(isset($_GET['search'])){
+                        $search = $_GET['search'];
+
+                        $sql = "SELECT * FROM equipos WHERE (equipo LIKE '%$search%' OR descripción LIKE '%$search%' OR n°_bien LIKE '%$search%')";
+                        $res = mysqli_query($conn, $sql);
+                    } else {
+                        $res = mysqli_query($conn, "SELECT * FROM equipos");
+                    }
 
                     while($row = mysqli_fetch_array($res)){
                         if($row[6] != 1){ 
@@ -146,8 +155,9 @@
         </div>
     </article>
 
+    <!-- MODAL PARA ViSUALIZAR Y REGISTRAR MANTENIMIENTOS AL EQUIPO SELECCIONADO -->
     <article class="modal fade" id="mantenimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Mantenimiento a equipo</h1>
