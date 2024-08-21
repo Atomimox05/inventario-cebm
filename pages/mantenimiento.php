@@ -102,7 +102,7 @@ if (!isset($_SESSION['id'])) {
                 <tr>
                     <td colspan="4">
                         <div class="alert alert-info mb-0" role="alert">
-                            Este equipo no tiene ningún registro de mantenimientos
+                            Este equipo no tiene ningún registro de mantenimiento.
                         </div>
                     </td>
                 </tr>

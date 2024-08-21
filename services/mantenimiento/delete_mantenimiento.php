@@ -1,5 +1,5 @@
 <?php
-    require('../config/conex.php');
+    require('../../config/conex.php');
     session_start();
 
     if(!isset($_SESSION['id'])){
