@@ -49,7 +49,7 @@ if (!isset($_SESSION['id'])) {
                 if (isset($_GET['search'])) {
                     $search = $_GET['search'];
 
-                    $sql = "SELECT * FROM equipos WHERE (equipo LIKE '%$search%' OR descripción LIKE '%$search%' OR n°_bien LIKE '%$search%')";
+                    $sql = "SELECT * FROM equipos WHERE (equipo LIKE '%$search%' OR descripcion LIKE '%$search%' OR n_bien LIKE '%$search%')";
                     $res = mysqli_query($conn, $sql);
                 } else {
                     $res = mysqli_query($conn, "SELECT * FROM equipos");
@@ -61,7 +61,7 @@ if (!isset($_SESSION['id'])) {
                         <tr>
                             <td><?php echo ($contador); ?></td>
                             <td><?php echo ($row[1]); ?></td>
-                            <td><?php echo ($row[2]); ?></td>
+                            <td class="text-warp"><?php echo ($row[2]); ?></td>
                             <td><?php echo ($row[3]); ?></td>
                             <td>
                                 <?php

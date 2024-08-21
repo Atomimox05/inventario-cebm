@@ -1,5 +1,5 @@
 <?php
-    include("../../config/conex.php");
+    require("../../config/conex.php");
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $equipo = $_POST['equipo'];

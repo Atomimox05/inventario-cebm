@@ -19,7 +19,7 @@
             $alert_msg = "¡El equipo ha sido desincorporado del inventario!";
         } else {
             $alert_type = "danger";
-            $alert_msg = "Ocurrio un error al desincorporar el equipo.";
+            $alert_msg = "Ocurrió un error al desincorporar el equipo.";
         }
 
         $_SESSION['alert_type'] = $alert_type;

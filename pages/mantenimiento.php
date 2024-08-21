@@ -3,6 +3,7 @@ session_start();
 
 if (!isset($_SESSION['id'])) {
     header('location: ../index.php');
+    exit();
 }
 ?>
 <?php include('../config/Header.php'); ?>
@@ -10,22 +11,40 @@ if (!isset($_SESSION['id'])) {
 <?php
     require('../config/conex.php');
 
-    $equipo = $_GET['equipo'];
+    if(isset($_GET['equipo'])){
+        $id_equipo = $_GET['equipo'];
 
-    $query = "SELECT * FROM mantenimientos WHERE equipo = $equipo";
-    $result = mysqli_query($conn, $query);
-    $mant_equipo = mysqli_fetch_array($result);
+        $stmt = $conn -> prepare("SELECT equipo, descripcion, n_bien FROM equipos WHERE id = ?");
+        $stmt -> bind_param("i", $id_equipo);
+        $stmt -> execute();
+        $resultEquipo = $stmt -> get_result();
+        $equipo = $resultEquipo -> fetch_assoc();
+        $stmt -> close();
+    } else {
+        header('location: equipos.php');
+        exit();
+    }
 ?>
 
 <section class="mt-5">
     <h3 class="text-center">Mantenimiento a equipo</h3>
 
-    <div class="container mt-4">
-        <h6><strong>Nombre del equipo:</strong></h6>
-        <h6><strong>Descripción:</strong></h6>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-4">
+                <h6><strong>Nombre del equipo: </strong> <?php echo($equipo['equipo'])?></h6>
+            </div>
+            <div class="col-sm-4">
+                <h6><strong>Descripción: </strong> <?php echo($equipo['descripcion'])?></h6>
+            </div>
+            <div class="col-sm-4">
+                <h6><strong>N° de bien: </strong> <?php echo($equipo['n_bien'])?></h6>
+            </div>
+        </div>
     </div>
     <div class="container mt-4">
-        <form class="row g-3 align-items-center mb-4">
+        <form action="../services/mantenimiento/registrar_mantenimiento.php" method="POST" class="row g-3 align-items-center mb-4">
+            <input type="hidden" name="equipo" value="<?php echo($id_equipo)?>">
             <div class="col">
                 <label for="fecha" class="form-label">Fecha de mantenimiento realizado</label>
                 <input type="date" name="fecha_mant" class="form-control" id="fecha"required>
@@ -52,11 +71,71 @@ if (!isset($_SESSION['id'])) {
                 </tr>
             </thead>
             <tbody>
-                
+                <?php
+                    $result = mysqli_query($conn, "SELECT * FROM mantenimientos WHERE equipo = $id_equipo");
+
+                    if(mysqli_num_rows($result) > 0){
+                        while ($mant = mysqli_fetch_array($result)) {
+                ?>
+                <tr>
+                    <td>
+                        <?php echo ($mant[2]); ?>
+                    </td>
+                    <td>
+                        <?php
+                            $queryUser = "SELECT nombre, apellido FROM usuarios WHERE id = $mant[3]";
+                            $resultUser = mysqli_query($conn, $queryUser);
+                            $user = mysqli_fetch_array($resultUser);
+
+                            echo ($user[0] . ' ' . $user[1]);
+                        ?>
+                    </td>
+                    <td>
+                        <?php echo ($mant[4]); ?>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(<?php echo ($mant[0]); ?>)">Eliminar</button>
+                    </td>
+                <?php
+                    }} else {
+                ?>
+                <tr>
+                    <td colspan="4">
+                        <div class="alert alert-info mb-0" role="alert">
+                            Este equipo no tiene ningún registro de mantenimientos
+                        </div>
+                    </td>
+                </tr>
+                <?php
+                    }
+                ?>
             </tbody>
         </table>
     </div>
         
 </section>
+
+<?php if (isset($_SESSION['alert_msg'])): ?>
+    <footer class="container fixed-bottom absolute-bottom">
+        <article class="d-flex justify-content-end mb-4">
+            <div class="alert alert-<?php echo $_SESSION['alert_type']; ?> alert-dismissible fade show shadow" role="alert">
+                <?php echo $_SESSION['alert_msg']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </article>
+    </footer>
+<?php
+    unset($_SESSION['alert_msg']);
+    unset($_SESSION['alert_type']);
+endif;
+?>
+
+<script>
+    const confirmDelete = (id) => {
+        if (confirm('¿Estás seguro de que deseas eliminar este registro de mantenimiento? Esta acción no se puede deshacer.')) {
+            window.location.href = '../services/mantenimiento/delete_mantenimiento.php?id=' + id;
+        }
+    }
+</script>
 
 <?php include('../config/FooterHtml.php'); ?>

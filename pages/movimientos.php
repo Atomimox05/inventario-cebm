@@ -10,11 +10,11 @@
                         <span class="input-group-text" id="basic-addon2">Buscar</span>
                         <input type="text" class="form-control" placeholder="Equipo, dirección, funcionario, n° de control">
                         <input type="date" class="form-control" placeholder="Fecha">
-                        <button class="btn btn-dark" type="button" id="button-addon2">Consultar</button>
+                        <button class="btn btn-warning text-light" type="button" id="button-addon2">Consultar</button>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#movimiento">Registar nuevo movimiento</button> 
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#movimiento">Registar nuevo movimiento</button> 
                 </div>             
             </div>
         </div>
