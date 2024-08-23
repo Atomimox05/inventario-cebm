@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['id'])) {
+    header('location: ../index.php');
+}
+?>
+
 <?php include ('../config/Header.php'); ?>
 <?php include ('../config/NavBar.php'); ?>
 

@@ -14,7 +14,7 @@ if (!isset($_SESSION['id'])) {
     <div class="container mt-5">
         <div class="d-flex row justify-content-between">
             <div class="col-sm-8">
-                <form action="" method="GET">
+                <form action="equipos.php" method="GET" autocomplete="off">
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon2">Buscar</span>
                         <input type="search" class="form-control" name="search" placeholder="Nombre, descripción o n° de bien">
