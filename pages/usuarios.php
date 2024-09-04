@@ -17,7 +17,7 @@
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">
                         Crear nuevo usuario
                     </button>
-                    <button type="button" class="btn btn-secondary">Departamentos</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#departamentos">Departamentos</button>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
     ?>
 
     <!-- Modal para crear nuevo usuario -->
-    <div class="modal fade" id="usuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <article class="modal fade" id="usuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -145,7 +145,66 @@
                 </div>
             </div>
         </div>
-    </div>
+    </article>
+
+    <!-- Modal departamentos -->
+    <article class="modal fade" id="departamentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Departamentos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form class="row align-items-center" action="../services/departamentos/save_dep.php" method="POST">
+                            <div class="col-sm-5">
+                                <label class="form-label" for="dep_name">Nombre del departamento</label>
+                                <input type="text" class="form-control" name="name" id="dep_name" maxlength="60" placeholder="Ingrese el nombre del departamento" required>
+                            </div>
+                            <div class="col-sm-5">
+                                <label for="responsable" class="form-label">Responsable del departamento</label>
+                                <input type="text" class="form-control" name="responsable_dep" id="responsable" maxlength="80" placeholder="Ingrese el nombre del responsable" required>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-dark">Registrar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Responsable</th>
+                                    <th scope="col">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    require('../config/conex.php');
+                                    $res = mysqli_query($conn, "SELECT * FROM departamento");
+                                    $contador = 1;
+                                    while($row = mysqli_fetch_array($res)){
+                                ?>
+                                <tr>
+                                    <th scope="row"><?php echo($contador); ?></th>
+                                    <td><?php echo($row[1]); ?></td>
+                                    <td><?php echo($row[2]); ?></td>
+                                </tr>
+                                <?php
+                                    $contador++;
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
     <script>
             const confirmDisable = (userId) => {
                 if (confirm("¿Estás seguro de que quieres deshabilitar este usuario?. Esta acción no se puede deshacer.")) {

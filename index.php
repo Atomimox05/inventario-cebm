@@ -6,7 +6,7 @@
 
     //Valida la sesión activa y redireciona a la página de inicio
     if(isset($_SESSION['id'])){
-        header('location: pages/usuarios.php');
+        header('location: pages/movimientos.php');
         exit(); //Evita que se siga ejecutando el script despues de redireccionar
     }
 
