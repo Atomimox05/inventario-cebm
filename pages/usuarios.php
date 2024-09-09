@@ -193,6 +193,9 @@
                                     <th scope="row"><?php echo($contador); ?></th>
                                     <td><?php echo($row[1]); ?></td>
                                     <td><?php echo($row[2]); ?></td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary">Cambiar responsable</button>
+                                    </td>
                                 </tr>
                                 <?php
                                     $contador++;

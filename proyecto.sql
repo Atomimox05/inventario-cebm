@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-08-2024 a las 22:52:57
+-- Tiempo de generación: 09-09-2024 a las 22:05:24
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "-04:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -29,7 +29,7 @@ SET time_zone = "-04:00";
 
 CREATE TABLE `departamento` (
   `id` int(11) NOT NULL,
-  `name` varchar(30) NOT NULL,
+  `name` varchar(60) NOT NULL,
   `responsable_dep` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -61,7 +61,8 @@ CREATE TABLE `equipos` (
 --
 
 INSERT INTO `equipos` (`id`, `equipo`, `descripcion`, `n_bien`, `disponible`, `estatus`, `activo`) VALUES
-(2, 'Dell Optiplex 7010', 'I5 3ra Gen, 4GB RAM, SSD 120G', '528532', 0, 1, 0);
+(2, 'Dell Optiplex 7030', 'I5 3ra Gen, 4GB RAM, SSD 120G', '528532', 0, 0, 0),
+(3, 'HP ProDesk', 'Intel Core I5 4ta Gen. 256 SDD y 500HDD, 12 GB RAM', '04262168', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -72,10 +73,17 @@ INSERT INTO `equipos` (`id`, `equipo`, `descripcion`, `n_bien`, `disponible`, `e
 CREATE TABLE `mantenimientos` (
   `id` int(11) NOT NULL,
   `equipo` int(11) NOT NULL,
-  `fecha_mant` datetime NOT NULL DEFAULT current_timestamp(),
+  `fecha_mant` date NOT NULL,
   `usuario` int(11) NOT NULL,
   `observaciones` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `mantenimientos`
+--
+
+INSERT INTO `mantenimientos` (`id`, `equipo`, `fecha_mant`, `usuario`, `observaciones`) VALUES
+(1, 2, '2024-08-20', 10, 'Limpieza al equipo S/N');
 
 -- --------------------------------------------------------
 
@@ -90,10 +98,19 @@ CREATE TABLE `movimientos` (
   `type` tinyint(4) NOT NULL,
   `funcionario` varchar(80) NOT NULL,
   `cargo` varchar(30) NOT NULL,
+  `motivo` varchar(80) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp(),
   `direccion` varchar(100) NOT NULL,
-  `observaciones` text NOT NULL
+  `observaciones` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `movimientos`
+--
+
+INSERT INTO `movimientos` (`id`, `equipo`, `usuario`, `type`, `funcionario`, `cargo`, `motivo`, `date`, `direccion`, `observaciones`) VALUES
+(1, 3, 10, 0, 'Pepe', 'Auditor', 'Auditoria', '2024-09-09 15:09:18', 'Charallave', ''),
+(2, 2, 10, 0, 'Pepe', 'Auditor', 'Auditoria', '2024-09-09 16:02:30', 'Los Teques', 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -176,19 +193,19 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `mantenimientos`
 --
 ALTER TABLE `mantenimientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

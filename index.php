@@ -45,7 +45,7 @@
                         $_SESSION['nombre'] = $row['nombre'];
                         $_SESSION['apellido'] = $row['apellido'];
                         $_SESSION['rol'] = $row['rol'];
-                        header('location: pages/usuarios.php');
+                        header('location: pages/movimientos.php');
                         exit();
                     } else {
                         $msj_error = "Usuario o contraseña incorrecta.";
