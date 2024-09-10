@@ -120,7 +120,7 @@ if (!isset($_SESSION['id'])) {
 <?php
     unset($_SESSION['alert_msg']);
     unset($_SESSION['alert_type']);
-endif;
+    endif;
 ?>
 
 <!-- MODAL PARA REGISTRAR UN NUEVO EQUIPO -->

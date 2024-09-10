@@ -15,12 +15,14 @@ if (!isset($_SESSION['id'])) {
     <div class="container mt-5">
         <div class="row">
             <div class="col-sm-7">
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon2">Buscar</span>
-                    <input type="text" class="form-control" placeholder="Equipo, dirección, funcionario, n° de control">
-                    <input type="date" class="form-control" placeholder="Fecha">
-                    <button class="btn btn-warning text-light" type="button" id="button-addon2">Consultar</button>
-                </div>
+                <form action="movimientos.php" method="get" autocomplete="off">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon2">Buscar</span>
+                        <input type="text" name="search" class="form-control" placeholder="ID de control, funcionario, dirección, motivo">
+                        <input type="date" name="date" class="form-control" placeholder="Fecha">
+                        <button class="btn btn-warning text-light" type="submit" id="button-addon2">Consultar</button>
+                    </div>
+                </form>
             </div>
             <div class="col-sm-2">
                 <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#movimiento">Registar movimiento</button>
@@ -43,19 +45,36 @@ if (!isset($_SESSION['id'])) {
                     <th scope="col">Motivo</th>
                     <th scope="col">Fecha y hora</th>
                     <th scope="col">Encargado</th>
-                    <th scope="col">Salida</th>
+                    <th scope="col">Detalles</th>
                 </tr>
             </thead>
             <tbody>
             <?php
                 $contador = 1;
 
-                $res = mysqli_query($conn, "SELECT * FROM movimientos");
+                if (isset($_GET['search']) || isset($_GET['date'])) {
+                    $search = $_GET['search'] ?? '';
+                    $date = $_GET['date'] ?? '';
+
+                    $stmt = $conn->prepare("SELECT * FROM movimientos WHERE (n_control LIKE ? OR motivo LIKE ? OR cargo LIKE ? OR direccion LIKE ? OR funcionario LIKE ? OR date LIKE ?) ORDER BY id DESC");
+
+                    $search = "%$search%";
+                    $date = "%$date%";
+
+                    $stmt->bind_param("ssssss", $search, $search, $search, $search, $search, $date);
+
+                    $stmt->execute();
+
+                    $res = $stmt->get_result();
+                } else {
+                    $res = $conn->query("SELECT * FROM movimientos ORDER BY id DESC");
+                }
+
                 while ($row = mysqli_fetch_array($res)) {
             ?>
                 <tr>
                     <td><?php echo ($contador); ?></td>
-                    <td><?php echo ($row[10]); ?></td>
+                    <td><?php if($row[10] != "") echo ($row[10]); else echo ("-") ?></td>
                     <td>
                         <?php
                             $equipo = $row[1];
@@ -138,7 +157,7 @@ if (!isset($_SESSION['id'])) {
                         <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <form action="../services/movimientos/movement_exit.php" method="POST" class="row g-2">
-                                    <input type="hidden" name="type" value="0">
+                                    <input type="hidden" name="type" value="0"> <!-- 0 = salida, 1 = entrada -->
                                     <div class="col-sm-6">
                                         <label class="form-label" for="equipo">Equipo</label>
                                         <input class="form-control" list="equipos" id="equipo" name="equipo" placeholder="Seleccione..." required/>
@@ -166,8 +185,8 @@ if (!isset($_SESSION['id'])) {
                                         <input class="form-control" type="text" name="motivo" id="motivo" maxlength="80" required>
                                     </div>
                                     <div class="col-sm-12">
-                                        <label class="form-label" for="responsable">Dirección adscrita al préstamo</label>
-                                        <input class="form-control" type="text" name="direccion" id="responsable" maxlength="100" required>
+                                        <label class="form-label" for="direccion">Dirección adscrita al préstamo</label>
+                                        <input class="form-control" type="text" name="direccion" id="direccion" maxlength="100" required>
                                     </div>
                                     <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
                                     <div class="col-sm-12">
@@ -175,7 +194,7 @@ if (!isset($_SESSION['id'])) {
                                         <textarea class="form-control" name="observaciones" id="observaciones" placeholder="Observaciones" maxlength="255" required></textarea>
                                     </div>
                                     <div class="d-grid gap-2 mt-4">
-                                        <input class="btn btn-primary" type="submit" value="Registrar movimiento">
+                                        <input class="btn btn-primary" type="submit" value="Registrar salida del equipo">
                                     </div>
                                 </form>
                             </div>
@@ -188,7 +207,35 @@ if (!isset($_SESSION['id'])) {
                             </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                            <div class="accordion-body">
+                                <form action="../services/movimientos/movement_entry.php" method="POST" class="row g-2">
+                                    <input type="hidden" name="type" value="1"> <!-- 0 = salida, 1 = entrada -->
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="n_control">ID de control</label>
+                                        <input type="text" name="n_control" id="n_control" class="form-control" placeholder="Ingrese el ID de control asignado" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="responsable2" class="form-label">Funcionario que entrega</label>
+                                        <input class="form-control" type="text" name="funcionario" id="responsable2" maxlength="80" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="cargo">Cargo del funcionario</label>
+                                        <input class="form-control" type="text" name="cargo" id="cargo" maxlength="30" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="form-label" for="direccion2">Dirección adscrita al préstamo</label>
+                                        <input class="form-control" type="text" name="direccion" id="direccion2" maxlength="100" required>
+                                    </div>
+                                    <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
+                                    <div class="col-sm-12">
+                                        <label class="form-label" for="observaciones">Observaciones</label>
+                                        <textarea class="form-control" name="observaciones" id="observaciones" placeholder="Observaciones" maxlength="255" required></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 mt-4">
+                                        <input class="btn btn-primary" type="submit" value="Registrar entrada del equipo">
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

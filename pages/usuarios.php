@@ -54,9 +54,11 @@
                         <td><?php echo($row[8]); ?></td>
                         <td><?php if($row[6] == 0){ echo("Administrador"); } else if ($row[6] == 1){ echo("Coordinador"); } else if ($row[6] == 2) { echo("Analista"); } else if ($row[6] == 3) { echo("Seguridad"); } ?></td>
                         <td>
-                            <a href="editUser.php?id=<?php echo($row[0]);?>&op=e" class="btn btn-sm btn-dark">Editar</a>
-                            <button class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo($row[0]);?>)">Deshabilitar</button>
-                            <a href="editUser.php?id=<?php echo($row[0]);?>&op=p" class="btn btn-sm btn-warning text-white">Cambiar contraseña</a>
+                            <div class="btn-group" role="group">
+                                <a href="editUser.php?id=<?php echo($row[0]);?>&op=e" class="btn btn-sm btn-dark">Editar</a>
+                                <button class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo($row[0]);?>)">Deshabilitar</button>
+                                <a href="editUser.php?id=<?php echo($row[0]);?>&op=p" class="btn btn-sm btn-warning text-white">Cambiar contraseña</a>
+                            </div>
                         </td>
                     </tr>
                     <?php $contador++; }} ?>
