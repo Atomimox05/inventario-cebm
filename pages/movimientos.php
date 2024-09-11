@@ -28,7 +28,7 @@ if (!isset($_SESSION['id'])) {
                 <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#movimiento">Registar movimiento</button>
             </div>
             <div class="col-sm-3">
-                <button class="btn btn-danger">Reporte de movimientos</button>
+                <a href="../services/reports/report_movement.php" target="_blank" class="btn btn-danger">Reporte de movimientos</a>
             </div>
         </div>
     </div>
@@ -41,11 +41,9 @@ if (!isset($_SESSION['id'])) {
                     <th scope="col">Equipo</th>
                     <th scope="col">Movimiento</th>
                     <th scope="col">Funcionario</th>
-                    <th scope="col">Dirección</th>
                     <th scope="col">Motivo</th>
                     <th scope="col">Fecha y hora</th>
                     <th scope="col">Encargado</th>
-                    <th scope="col">Detalles</th>
                 </tr>
             </thead>
             <tbody>
@@ -74,7 +72,7 @@ if (!isset($_SESSION['id'])) {
             ?>
                 <tr>
                     <td><?php echo ($contador); ?></td>
-                    <td><?php if($row[10] != "") echo ($row[10]); else echo ("-") ?></td>
+                    <td><?php if($row[9] != "") echo ($row[9]); else echo ("-") ?></td>
                     <td>
                         <?php
                             $equipo = $row[1];
@@ -93,7 +91,6 @@ if (!isset($_SESSION['id'])) {
                         ?>
                     </td>
                     <td><?php echo ($row[4]); ?></td>
-                    <td><?php echo ($row[8]); ?></td>
                     <td><?php echo ($row[6]); ?></td>
                     <td><?php echo ($row[7]); ?></td>
                     <td>
@@ -103,16 +100,6 @@ if (!isset($_SESSION['id'])) {
                             $row3 = mysqli_fetch_array($res3);
                             echo ($row3[1] . " " . $row3[2]);
                         ?>
-                    </td>
-                    <td>
-                        <form class="d-flex gap-2">
-                            <div class="form-check">
-                                <label for="aprobe" class="form-check-label">Aprobar</label>
-                                <input class="form-check-input" type="checkbox" value="0" id="aprobe">
-                            </div>
-                            <button class="btn btn-sm btn-dark" type="button">Aceptar</button>
-                        </form>
-                        Aprobado por: (Usuario)
                     </td>
                 </tr>
             <?php
@@ -160,17 +147,20 @@ if (!isset($_SESSION['id'])) {
                                     <input type="hidden" name="type" value="0"> <!-- 0 = salida, 1 = entrada -->
                                     <div class="col-sm-6">
                                         <label class="form-label" for="equipo">Equipo</label>
-                                        <input class="form-control" list="equipos" id="equipo" name="equipo" placeholder="Seleccione..." required/>
-                                        <datalist id="equipos">
-                                            <?php
-                                                require('../config/conex.php');
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon4">Buscar</span>
+                                            <input class="form-control" list="equipos" id="equipo" name="equipo" placeholder="Seleccione..." required/>
+                                            <datalist id="equipos">
+                                                <?php
+                                                    require('../config/conex.php');
 
-                                                $res = mysqli_query($conn, "SELECT id,equipo, descripcion, n_bien FROM equipos WHERE disponible = 0 AND activo = 0");//Busca solo equipos que esten disponibles en inventario y activos
-                                                while($row = mysqli_fetch_array($res)){
-                                                ?>
-                                                <option value="<?php echo($row[0]); ?>">N° de bien: <?php echo($row[3]); ?> - <?php echo($row[1]); ?>, <?php echo($row[2]); ?></option>
-                                            <?php } ?>
-                                        </datalist>
+                                                    $res = mysqli_query($conn, "SELECT id,equipo, descripcion, n_bien FROM equipos WHERE disponible = 0 AND activo = 0");//Busca solo equipos que esten disponibles en inventario y activos
+                                                    while($row = mysqli_fetch_array($res)){
+                                                    ?>
+                                                    <option value="<?php echo($row[0]); ?>">N° de bien: <?php echo($row[3]); ?> - <?php echo($row[1]); ?>, <?php echo($row[2]); ?></option>
+                                                <?php } ?>
+                                            </datalist>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="form-label" for="responsable">Funcionario que retira</label>
@@ -183,10 +173,6 @@ if (!isset($_SESSION['id'])) {
                                     <div class="col-sm-6">
                                         <label class="form-label" for="motivo">Motivo del préstamo</label>
                                         <input class="form-control" type="text" name="motivo" id="motivo" maxlength="80" required>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <label class="form-label" for="direccion">Dirección adscrita al préstamo</label>
-                                        <input class="form-control" type="text" name="direccion" id="direccion" maxlength="100" required>
                                     </div>
                                     <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
                                     <div class="col-sm-12">
@@ -210,7 +196,7 @@ if (!isset($_SESSION['id'])) {
                             <div class="accordion-body">
                                 <form action="../services/movimientos/movement_entry.php" method="POST" class="row g-2">
                                     <input type="hidden" name="type" value="1"> <!-- 0 = salida, 1 = entrada -->
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <label class="form-label" for="n_control">ID de control</label>
                                         <input type="text" name="n_control" id="n_control" class="form-control" placeholder="Ingrese el ID de control asignado" required>
                                     </div>
@@ -221,10 +207,6 @@ if (!isset($_SESSION['id'])) {
                                     <div class="col-sm-6">
                                         <label class="form-label" for="cargo">Cargo del funcionario</label>
                                         <input class="form-control" type="text" name="cargo" id="cargo" maxlength="30" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="form-label" for="direccion2">Dirección adscrita al préstamo</label>
-                                        <input class="form-control" type="text" name="direccion" id="direccion2" maxlength="100" required>
                                     </div>
                                     <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
                                     <div class="col-sm-12">

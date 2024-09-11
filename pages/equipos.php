@@ -24,7 +24,7 @@ if (!isset($_SESSION['id'])) {
             </div>
             <div class="col-sm-4">
                 <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#equipo">Registar nuevo equipo</button>
-                <button class="btn btn-secondary">Generar reporte</button>
+                <a href="../services/reports/report_equipo.php" target="_blank" class="btn btn-secondary">Generar reporte</a>
             </div>
         </div>
     </div>

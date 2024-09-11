@@ -8,7 +8,6 @@
         $type = $_POST['type'];
         $funcionario = $_POST['funcionario'];
         $cargo = $_POST['cargo'];
-        $direccion = $_POST['direccion'];
         $observaciones = $_POST['observaciones'];
         $n_control = $_POST['n_control'];
         $defeated = 1;
@@ -24,9 +23,9 @@
             $motivo = $row['motivo'];
  
             // Insertar la entrada en la base de datos
-            $sql = "INSERT INTO movimientos (equipo, usuario, type ,funcionario, cargo, motivo, direccion, observaciones, defeated) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO movimientos (equipo, usuario, type ,funcionario, cargo, motivo, observaciones, defeated) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn -> prepare($sql);
-            $stmt -> bind_param('iiisssssi', $equipo, $usuario, $type, $funcionario, $cargo, $motivo, $direccion, $observaciones, $defeated);
+            $stmt -> bind_param('iiissssi', $equipo, $usuario, $type, $funcionario, $cargo, $motivo, $observaciones, $defeated);
 
             if($stmt -> execute()){
                 // Actualizar el estado del equipo a disponible
