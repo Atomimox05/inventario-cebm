@@ -44,6 +44,7 @@ if (!isset($_SESSION['id'])) {
                     <th scope="col">Motivo</th>
                     <th scope="col">Fecha y hora</th>
                     <th scope="col">Encargado</th>
+                    <th scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -100,6 +101,13 @@ if (!isset($_SESSION['id'])) {
                             $row3 = mysqli_fetch_array($res3);
                             echo ($row3[1] . " " . $row3[2]);
                         ?>
+                    </td>
+                    <td>
+                        <?php
+                           if ($row[3] == 0) {
+                        ?>
+                        <a class="btn btn-sm btn-success" href="../services/reports/report_movement.php?id=<?php echo $row[0]; ?>" target="_blank">Ver reporte</a>
+                        <?php } ?>
                     </td>
                 </tr>
             <?php

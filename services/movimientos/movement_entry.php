@@ -52,7 +52,6 @@
             $alert_msg = "El ID de control no existe o no es válido.";
             $_SESSION['alert_type'] = $alert_type;
             $_SESSION['alert_msg'] = $alert_msg;
-            header("Location: ../../pages/movimientos.php");
             exit();
         }
     }

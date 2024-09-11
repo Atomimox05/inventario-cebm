@@ -31,6 +31,9 @@
 
         $_SESSION['alert_type'] = $alert_type;
         $_SESSION['alert_msg'] = $alert_msg;
+        echo "<script type='text/javascript'>
+                window.open('../reports/report_movement.php?n_control=" . $n_control . "', '_blank');
+            </script>";
         header("Location: ../../pages/movimientos.php");
         exit();
     }
