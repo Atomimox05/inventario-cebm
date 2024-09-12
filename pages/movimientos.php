@@ -18,7 +18,7 @@ if (!isset($_SESSION['id'])) {
                 <form action="movimientos.php" method="get" autocomplete="off">
                     <div class="input-group">
                         <span class="input-group-text" id="basic-addon2">Buscar</span>
-                        <input type="text" name="search" class="form-control" placeholder="ID de control, funcionario, dirección, motivo">
+                        <input type="text" name="search" class="form-control" placeholder="ID de control, funcionario, motivo">
                         <input type="date" name="date" class="form-control" placeholder="Fecha">
                         <button class="btn btn-warning text-light" type="submit" id="button-addon2">Consultar</button>
                     </div>
@@ -28,7 +28,19 @@ if (!isset($_SESSION['id'])) {
                 <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#movimiento">Registar movimiento</button>
             </div>
             <div class="col-sm-3">
-                <a href="../services/reports/report_movement.php" target="_blank" class="btn btn-danger">Reporte de movimientos</a>
+                <div class="dropdown">
+                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Historial de movimientos
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="../services/reports/report_general_movements.php?op=s" target="_blank" class="dropdown-item">Salidas</a>
+                        </li>
+                        <li>
+                            <a href="../services/reports/report_general_movements.php?op=e" target="_blank" class="dropdown-item">Entradas</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -55,12 +67,12 @@ if (!isset($_SESSION['id'])) {
                     $search = $_GET['search'] ?? '';
                     $date = $_GET['date'] ?? '';
 
-                    $stmt = $conn->prepare("SELECT * FROM movimientos WHERE (n_control LIKE ? OR motivo LIKE ? OR cargo LIKE ? OR direccion LIKE ? OR funcionario LIKE ? OR date LIKE ?) ORDER BY id DESC");
+                    $stmt = $conn->prepare("SELECT * FROM movimientos WHERE (n_control LIKE ? OR motivo LIKE ? OR cargo LIKE ? OR funcionario LIKE ? OR date LIKE ?) ORDER BY id DESC");
 
                     $search = "%$search%";
                     $date = "%$date%";
 
-                    $stmt->bind_param("ssssss", $search, $search, $search, $search, $search, $date);
+                    $stmt->bind_param("sssss", $search, $search, $search, $search, $date);
 
                     $stmt->execute();
 
@@ -106,7 +118,9 @@ if (!isset($_SESSION['id'])) {
                         <?php
                            if ($row[3] == 0) {
                         ?>
-                        <a class="btn btn-sm btn-success" href="../services/reports/report_movement.php?id=<?php echo $row[0]; ?>" target="_blank">Ver reporte</a>
+                        <a class="btn btn-sm btn-dark" href="../services/reports/report_movement.php?id=<?php echo $row[0]; ?>" target="_blank">Ver reporte</a>
+                        <?php } else {?>
+                            <small>No hay opciones disponibles</small>
                         <?php } ?>
                     </td>
                 </tr>

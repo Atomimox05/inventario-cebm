@@ -88,5 +88,6 @@
         $pdf->Ln();
         $pdf->Cell(200,20,utf8_decode('OBSERVACIONES:'), 1);
     }
+    $pdf->Close();
     $pdf->Output();
 ?>

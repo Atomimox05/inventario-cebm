@@ -38,6 +38,8 @@
                                     <?php echo $nombre.' '.$apellido; ?>
                                 </button>
                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Manual de usuario</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="../services/logout.php">Cerrar sesión</a></li>
                                 </ul>
                             </li>
