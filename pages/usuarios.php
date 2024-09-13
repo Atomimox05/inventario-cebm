@@ -169,17 +169,17 @@
                                 <input type="text" class="form-control" name="responsable_dep" id="responsable" maxlength="80" placeholder="Ingrese el nombre del responsable" required>
                             </div>
                             <div class="col-sm-2">
-                                <button type="submit" class="btn btn-dark">Registrar</button>
+                                <button type="submit" class="btn btn-sm btn-dark">Registrar departamento</button>
                             </div>
                         </form>
                     </div>
                     <hr>
                     <div class="container">
-                        <table class="table table-hover">
+                        <table class="table table-hover text-center">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Departamento</th>
+                                    <th scope="col">Nombre</th>
                                     <th scope="col">Responsable</th>
                                     <th scope="col">Opciones</th>
                                 </tr>
@@ -196,7 +196,24 @@
                                     <td><?php echo($row[1]); ?></td>
                                     <td><?php echo($row[2]); ?></td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary">Cambiar responsable</button>
+                                        <div class="dropdown">
+                                            <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Modificar responsable
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <form action="../services/departamentos/update_resp.php?id=<?php echo($row[0]); ?>" class="px-4 py-3 row g-3" autocomplete="off" method="post">
+                                                        <div class="col-sm-12">
+                                                            <label for="responsable2" class="form-label">Responsable del departamento</label>
+                                                             <input type="text" class="form-control form-control-sm" name="responsable_dep" id="responsable2" maxlength="80" placeholder="Ingrese el nombre del responsable" required>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <button type="submit" class="btn btn-sm btn-warning text-light">Modificar</button>
+                                                        </div>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php

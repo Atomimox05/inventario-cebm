@@ -1,5 +1,6 @@
 <?php
-    include('../../config/conex.php');
+    session_start();
+    require('../../config/conex.php');
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $nombre = $_POST['nombre'];
