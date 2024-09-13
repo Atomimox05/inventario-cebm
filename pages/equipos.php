@@ -12,7 +12,7 @@ if (!isset($_SESSION['id'])) {
 <section class="mt-5">
     <h3 class="text-center">Equipos</h3>
     <div class="container mt-5">
-        <div class="d-flex row justify-content-between">
+        <div class="d-flex row justify-content-between text-center">
             <div class="col-sm-8">
                 <form action="equipos.php" method="GET" autocomplete="off">
                     <div class="input-group">
