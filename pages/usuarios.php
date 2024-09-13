@@ -235,4 +235,7 @@
             }
     </script>
 
-<?php include ('../config/FooterHtml.php'); ?>
+<?php 
+    include('../config/FooterHtml.php'); 
+    $conn->close();
+?>

@@ -13,34 +13,30 @@ if (!isset($_SESSION['id'])) {
 <section class="mt-5">
     <h3 class="text-center">Movimientos</h3>
     <div class="container mt-5">
-        <div class="row">
+        <div class="d-flex row justify-content-between">
             <div class="col-sm-7">
-                <form action="movimientos.php" method="get" autocomplete="off">
+                <form action="" method="POST" autocomplete="off">
                     <div class="input-group">
+                        <?php
+                            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        ?>
+                            <a class="input-group-text text-decoration-none bg-secondary text-light" href="movimientos.php" id="basic-addon2">< Volver</a>
+                        <?php } else { ?>
                         <span class="input-group-text" id="basic-addon2">Buscar</span>
-                        <input type="text" name="search" class="form-control" placeholder="ID de control, funcionario, motivo">
+                        <?php } ?>
+                        <input type="search" name="search" class="form-control" placeholder="ID de control, funcionario, motivo">
                         <input type="date" name="date" class="form-control" placeholder="Fecha">
                         <button class="btn btn-warning text-light" type="submit" id="button-addon2">Consultar</button>
                     </div>
                 </form>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm">
                 <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#movimiento">Registar movimiento</button>
             </div>
-            <div class="col-sm-3">
-                <div class="dropdown">
-                    <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Historial de movimientos
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="../services/reports/report_general_movements.php?op=s" target="_blank" class="dropdown-item">Salidas</a>
-                        </li>
-                        <li>
-                            <a href="../services/reports/report_general_movements.php?op=e" target="_blank" class="dropdown-item">Entradas</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="col-sm">
+                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#reporte_movements_modal">
+                    Historial de movimientos
+                </button>
             </div>
         </div>
     </div>
@@ -62,26 +58,31 @@ if (!isset($_SESSION['id'])) {
             <tbody>
             <?php
                 $contador = 1;
+                $res = null;
 
-                if (isset($_GET['search']) || isset($_GET['date'])) {
-                    $search = $_GET['search'] ?? '';
-                    $date = $_GET['date'] ?? '';
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $search = $_POST['search'];
+                    $date = $_POST['date'];
 
-                    $stmt = $conn->prepare("SELECT * FROM movimientos WHERE (n_control LIKE ? OR motivo LIKE ? OR cargo LIKE ? OR funcionario LIKE ? OR date LIKE ?) ORDER BY id DESC");
+                    $sql = "SELECT * FROM movimientos WHERE 1=1";
 
-                    $search = "%$search%";
-                    $date = "%$date%";
+                    if (!empty($search)) {
+                        $sql .= " AND (n_control LIKE '%$search%' OR motivo LIKE '%$search%' OR cargo LIKE '%$search%' OR funcionario LIKE '%$search%')";
+                    }
 
-                    $stmt->bind_param("sssss", $search, $search, $search, $search, $date);
-
-                    $stmt->execute();
-
-                    $res = $stmt->get_result();
+                    if (!empty($date)) {
+                        $sql .= " AND date LIKE '%$date%'";
+                    }
                 } else {
-                    $res = $conn->query("SELECT * FROM movimientos ORDER BY id DESC");
+                    $sql = "SELECT * FROM movimientos ORDER BY id DESC";
                 }
 
-                while ($row = mysqli_fetch_array($res)) {
+                $res = $conn->query($sql);
+
+                if($res != null) {
+                    if($res->num_rows > 0){
+                        while ($row = mysqli_fetch_array($res)) {
+        
             ?>
                 <tr>
                     <td><?php echo ($contador); ?></td>
@@ -126,8 +127,16 @@ if (!isset($_SESSION['id'])) {
                 </tr>
             <?php
                 $contador++;
-                }
+                }} else {
             ?>
+                <tr>
+                    <td colspan="9">
+                        <div class="alert alert-secondary mb-0" role="alert">
+                            No se encontraron resultados. Intente con otros filtros.
+                        </div>
+                    </td>
+                </tr>
+            <?php }} ?>
             </tbody>
         </table>
     </div>
@@ -148,6 +157,7 @@ if (!isset($_SESSION['id'])) {
     endif;
 ?>
 
+<!-- MODAL PARA REGISTRAR UN NUEVO MOVIMIENTO -->
 <article class="modal fade" id="movimiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -248,4 +258,46 @@ if (!isset($_SESSION['id'])) {
     </div>
 </article>
 
-<?php include('../config/FooterHtml.php'); ?>
+<!-- MODAL PARA SOLICITAR REPORTE DE MOVIMIENTOS -->
+<div class="modal fade" id="reporte_movements_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Reporte de movimientos</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" autocomplete="off">
+                    <div class="row g-2">
+                        <div class="col-sm-12">
+                            <label class="form-label" for="type">Tipo de movimiento</label>
+                            <select class="form-select" name="type" id="type" required>
+                                <option disabled selected>Seleccione...</option>
+                                <option value="0">Salida</option>
+                                <option value="1">Entrada</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="start_date">Desde</label>
+                            <input class="form-control" type="date" name="start_date" id="start_date">
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="end_date">Hasta</label>
+                            <input class="form-control" type="date" name="end_date" id="end_date">
+                        </div>
+                        <div class="col-sm-12 mt-4">
+                            <div class="d-grid gap-2">
+                                <input class="btn btn-dark" type="submit" value="Generar reporte">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php 
+    include('../config/FooterHtml.php'); 
+    $conn->close();
+?>
