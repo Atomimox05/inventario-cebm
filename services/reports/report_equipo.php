@@ -54,34 +54,36 @@
 
     $pdf->SetFont('Arial','',9);
     while($row = mysqli_fetch_array($res)){
-        $descripcion = $row[2];
-        if ($row[4] == 0) {
-            $disponible = ("Disponible");
-        } else {
-            $disponible = ("No disponible");
+        if ($row[6] != 1) {
+            $descripcion = $row[2];
+            if ($row[4] == 0) {
+                $disponible = ("Disponible");
+            } else {
+                $disponible = ("No disponible");
+            }
+            switch ($row[5]) {
+                case 0:
+                    $integridad = ("Excelentes condiciones");
+                    break;
+                case 1:
+                    $integridad = ("Buenas condiciones");
+                    break;
+                case 2:
+                    $integridad = ("Condiciones regulares");
+                    break;
+                case 3:
+                    $integridad = ("Malas condiciones");
+                    break;
+            }
+            $pdf->Cell(10,10,$contador, 1, 0, 'C');
+            $pdf->Cell(50,10,utf8_decode($row[1]), 1, 0, 'C');
+            $pdf->Cell(100,10,utf8_decode($descripcion), 1, 0, 'C');
+            $pdf->Cell(30,10,utf8_decode($row[3]), 1, 0, 'C');
+            $pdf->Cell(30,10,utf8_decode($disponible), 1, 0, 'C');
+            $pdf->Cell(40,10,utf8_decode($integridad), 1, 0, 'C');
+            $pdf->Ln();
+            $contador++;
         }
-        switch ($row[5]) {
-            case 0:
-                $integridad = ("Excelentes condiciones");
-                break;
-            case 1:
-                $integridad = ("Buenas condiciones");
-                break;
-            case 2:
-                $integridad = ("Condiciones regulares");
-                break;
-            case 3:
-                $integridad = ("Malas condiciones");
-                break;
-        }
-        $pdf->Cell(10,10,$contador, 1, 0, 'C');
-        $pdf->Cell(50,10,utf8_decode($row[1]), 1, 0, 'C');
-        $pdf->Cell(100,10,utf8_decode($descripcion), 1, 0, 'C');
-        $pdf->Cell(30,10,utf8_decode($row[3]), 1, 0, 'C');
-        $pdf->Cell(30,10,utf8_decode($disponible), 1, 0, 'C');
-        $pdf->Cell(40,10,utf8_decode($integridad), 1, 0, 'C');
-        $pdf->Ln();
-        $contador++;
     }
     $pdf->Ln(50);
     $pdf->Cell(60,10);

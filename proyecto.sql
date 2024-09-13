@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-09-2024 a las 22:05:24
+-- Tiempo de generación: 13-09-2024 a las 02:37:11
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -61,8 +61,9 @@ CREATE TABLE `equipos` (
 --
 
 INSERT INTO `equipos` (`id`, `equipo`, `descripcion`, `n_bien`, `disponible`, `estatus`, `activo`) VALUES
-(2, 'Dell Optiplex 7030', 'I5 3ra Gen, 4GB RAM, SSD 120G', '528532', 0, 0, 0),
-(3, 'HP ProDesk', 'Intel Core I5 4ta Gen. 256 SDD y 500HDD, 12 GB RAM', '04262168', 0, 0, 0);
+(2, 'Dell Optiplex 7030', 'I5 3ra Gen, 4GB RAM, SSD 120G', '528532', 0, 1, 0),
+(3, 'HP ProDesk', 'Intel Core I5 4ta Gen. 256 SDD y 500HDD, 12 GB RAM', '04262168', 0, 0, 0),
+(4, 'Asus Aspiron 3000', 'AMD Athlon X2, 4GB RAM, 320GB HDD, Bolso, Cargador', '58115741', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -97,20 +98,24 @@ CREATE TABLE `movimientos` (
   `usuario` int(11) NOT NULL,
   `type` tinyint(4) NOT NULL,
   `funcionario` varchar(80) NOT NULL,
-  `cargo` varchar(30) NOT NULL,
+  `cargo` varchar(50) NOT NULL,
   `motivo` varchar(80) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `direccion` varchar(100) NOT NULL,
-  `observaciones` varchar(255) NOT NULL
+  `date` datetime NOT NULL DEFAULT current_timestamp(),
+  `observaciones` varchar(255) NOT NULL,
+  `n_control` varchar(50) DEFAULT NULL,
+  `defeated` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `movimientos`
 --
 
-INSERT INTO `movimientos` (`id`, `equipo`, `usuario`, `type`, `funcionario`, `cargo`, `motivo`, `date`, `direccion`, `observaciones`) VALUES
-(1, 3, 10, 0, 'Pepe', 'Auditor', 'Auditoria', '2024-09-09 15:09:18', 'Charallave', ''),
-(2, 2, 10, 0, 'Pepe', 'Auditor', 'Auditoria', '2024-09-09 16:02:30', 'Los Teques', 'aaaa');
+INSERT INTO `movimientos` (`id`, `equipo`, `usuario`, `type`, `funcionario`, `cargo`, `motivo`, `date`, `observaciones`, `n_control`, `defeated`) VALUES
+(2, 3, 10, 0, 'Diego', 'Coordinador', 'Auditoria', '2024-09-11 09:47:37', 'Se entrega en buenas condiciones', '66e19f7918bfe', 0),
+(3, 2, 10, 0, 'Pepe', 'Coordinador', 'Auditoria', '2024-09-11 10:29:29', 'Sin observaciones', '66e1a94931984', 0),
+(4, 3, 10, 1, 'Jorge', 'Coordinador', 'Auditoria', '2024-09-11 10:58:09', 'Se recibe en buenas condiciones', NULL, 1),
+(5, 4, 10, 0, 'Omar Rivero', 'Abogado Auditor', 'Jornada de auditoría', '2024-09-12 19:46:59', 'Se entrega en excelentes condiciones', '66e37d7330e33', 0),
+(6, 2, 10, 1, 'Pepe', 'Auditor', 'Auditoria', '2024-09-12 19:52:59', 'S/O', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -169,6 +174,7 @@ ALTER TABLE `mantenimientos`
 --
 ALTER TABLE `movimientos`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `n_control` (`n_control`),
   ADD KEY `equipo` (`equipo`),
   ADD KEY `usuario` (`usuario`);
 
@@ -193,7 +199,7 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `mantenimientos`
@@ -205,7 +211,7 @@ ALTER TABLE `mantenimientos`
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -228,8 +234,8 @@ ALTER TABLE `mantenimientos`
 -- Filtros para la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  ADD CONSTRAINT `movimientos_ibfk_1` FOREIGN KEY (`equipo`) REFERENCES `equipos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `movimientos_ibfk_2` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `movimientos_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `movimientos_ibfk_3` FOREIGN KEY (`equipo`) REFERENCES `equipos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`
