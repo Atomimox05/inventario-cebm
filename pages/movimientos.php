@@ -267,7 +267,7 @@ if (!isset($_SESSION['id'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="post" autocomplete="off">
+                <form action="../services/reports/report_general_movements.php" target="_blank" method="post" autocomplete="off">
                     <div class="row g-2">
                         <div class="col-sm-12">
                             <label class="form-label" for="type">Tipo de movimiento</label>
@@ -279,7 +279,7 @@ if (!isset($_SESSION['id'])) {
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="start_date">Desde</label>
-                            <input class="form-control" type="date" name="start_date" id="start_date">
+                            <input class="form-control" type="date" min="2024-09-01" name="start_date" id="start_date">
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="end_date">Hasta</label>
