@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-09-2024 a las 02:37:11
+-- Tiempo de generación: 17-09-2024 a las 21:27:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,7 +38,8 @@ CREATE TABLE `departamento` (
 --
 
 INSERT INTO `departamento` (`id`, `name`, `responsable_dep`) VALUES
-(1, 'Tecnología', 'Admin');
+(1, 'Tecnología', 'Administrador'),
+(2, 'Departamento de bienes y almacén', 'Maria Vivas');
 
 -- --------------------------------------------------------
 
@@ -63,7 +64,7 @@ CREATE TABLE `equipos` (
 INSERT INTO `equipos` (`id`, `equipo`, `descripcion`, `n_bien`, `disponible`, `estatus`, `activo`) VALUES
 (2, 'Dell Optiplex 7030', 'I5 3ra Gen, 4GB RAM, SSD 120G', '528532', 0, 1, 0),
 (3, 'HP ProDesk', 'Intel Core I5 4ta Gen. 256 SDD y 500HDD, 12 GB RAM', '04262168', 0, 0, 0),
-(4, 'Asus Aspiron 3000', 'AMD Athlon X2, 4GB RAM, 320GB HDD, Bolso, Cargador', '58115741', 1, 1, 0);
+(4, 'Asus Aspiron 3000', 'AMD Athlon X2, 4GB RAM, 320GB HDD, Bolso, Cargador', '58115741', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -84,7 +85,8 @@ CREATE TABLE `mantenimientos` (
 --
 
 INSERT INTO `mantenimientos` (`id`, `equipo`, `fecha_mant`, `usuario`, `observaciones`) VALUES
-(1, 2, '2024-08-20', 10, 'Limpieza al equipo S/N');
+(1, 2, '2024-08-20', 10, 'Limpieza al equipo S/N'),
+(4, 4, '2024-09-17', 14, 'Limpieza al equipo S/N');
 
 -- --------------------------------------------------------
 
@@ -115,7 +117,8 @@ INSERT INTO `movimientos` (`id`, `equipo`, `usuario`, `type`, `funcionario`, `ca
 (3, 2, 10, 0, 'Pepe', 'Coordinador', 'Auditoria', '2024-09-11 10:29:29', 'Sin observaciones', '66e1a94931984', 0),
 (4, 3, 10, 1, 'Jorge', 'Coordinador', 'Auditoria', '2024-09-11 10:58:09', 'Se recibe en buenas condiciones', NULL, 1),
 (5, 4, 10, 0, 'Omar Rivero', 'Abogado Auditor', 'Jornada de auditoría', '2024-09-12 19:46:59', 'Se entrega en excelentes condiciones', '66e37d7330e33', 0),
-(6, 2, 10, 1, 'Pepe', 'Auditor', 'Auditoria', '2024-09-12 19:52:59', 'S/O', NULL, 1);
+(6, 2, 10, 1, 'Pepe', 'Auditor', 'Auditoria', '2024-09-12 19:52:59', 'S/O', NULL, 1),
+(7, 4, 14, 1, 'Omar Rivero', 'Auditor', 'Jornada de auditoría', '2024-09-17 11:13:41', 'Sin observaciones, entrega en buen estado', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -143,7 +146,9 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `ci`, `n_carnet`, `departamento`, `rol`, `estatus`, `username`, `password`) VALUES
 (10, 'Derek', 'Ramos', '29751122', '8989898', 1, 0, 0, 'derek', '$2y$10$QfY8ncSkh4Lfm9rhOjNuT.PzR0O5lkcRe9EZHfOyE5AzNvysg/WAi'),
 (11, 'prueba', 'deshabilitar', '79879779', '7987779', 1, 2, 1, 'editado', '$2y$10$gPXp.bkY9/7iVPI415/wp.1RVYNXg/gc53FP4sHFcTwNlXpeI8uKi'),
-(12, 'Prueba', 'prueba', '89989789', '7899898', 1, 3, 0, 'prueba', '$2y$10$gfbgz3f8QsEGxrYMOSJJUe10SlDUxtzKDijDegjJdJb6nIOuErSJG');
+(12, 'Prueba', 'prueba', '89989789', '7899898', 1, 3, 1, 'prueba', '$2y$10$e90x14QL66UBDDpUbzpOT.1JBSidxEA..9Tn2dDwjRhju4SEniJQe'),
+(13, 'José', 'Peña', '18000000', '123456', 1, 0, 0, 'peña', '$2y$10$cy7U9u5PjN993XtOjPq1Zeu0tRQLJ7timGC1a21pJFj7YVLo3vjjK'),
+(14, 'Analista', 'Tecnologia', '56565656', '8989898', 1, 1, 0, 'analista', '$2y$10$1Ee6eSHOlHcVW8Wfq82U9ujC2spNIJ3IGwlsbqWMvFgSnpXMxhOwa');
 
 --
 -- Índices para tablas volcadas
@@ -193,7 +198,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `departamento`
 --
 ALTER TABLE `departamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `equipos`
@@ -205,19 +210,19 @@ ALTER TABLE `equipos`
 -- AUTO_INCREMENT de la tabla `mantenimientos`
 --
 ALTER TABLE `mantenimientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas

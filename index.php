@@ -1,61 +1,7 @@
 <?php
-    //Inicia la sesión y establece la conexión a la base de datos
-    $msj_error= "";
-    require('config/conex.php');
     session_start();
-
-    //Valida la sesión activa y redireciona a la página de inicio
-    if(isset($_SESSION['id'])){
-        header('location: pages/movimientos.php');
-        exit(); //Evita que se siga ejecutando el script despues de redireccionar
-    }
-
-    //Procesa que el formulario haya sido enviado
-    if(!empty($_POST)){
-        //Valida que el usuario y la contraseña no esten vacios
-        if(empty($_POST['user']) || empty($_POST['password'])){
-            $msj_error = "Ingrese su usuario y contraseña.";
-        } else {
-            //Escapa los caracteres especiales para evitar inyecciones SQL
-            $username = mysqli_real_escape_string($conn, $_POST['user']);
-            $pass = $_POST['password'];
-
-            $msj_error = "";
-
-            //Prpepara la sentencia SQL
-            $sql = "SELECT * FROM usuarios WHERE username = ?";
-            $stmt = $conn -> prepare($sql);
-            //Vincula los valores de la consulta (s = string)
-            $stmt -> bind_param('s', $username);
-            $stmt -> execute();
-            $result = $stmt -> get_result();
-            $rows = $result->num_rows;
-
-            //Valida que el usuario exista
-            if($rows > 0){
-                $row = $result -> fetch_assoc();
-                //Valida que el usuario este habilitado
-                if($row['estatus'] == 1){
-                    $msj_error = "Este usuario se encuentra inhabilitado para ingresar al sistema. Comuniquese con el administrador.";
-                } else {
-                    //Valida que la contraseña sea correcta
-                    if(password_verify($pass, $row['password'])){
-                        //Inicia la sesión y redirecciona a la página de inicio
-                        $_SESSION['id'] = $row['id'];
-                        $_SESSION['nombre'] = $row['nombre'];
-                        $_SESSION['apellido'] = $row['apellido'];
-                        $_SESSION['rol'] = $row['rol'];
-                        header('location: pages/movimientos.php');
-                        exit();
-                    } else {
-                        $msj_error = "Usuario o contraseña incorrecta.";
-                    }
-                }
-            } else {
-                $msj_error = "Usuario o contraseña incorrecta.";
-            }
-        }
-    }
+    $msj_error = isset($_SESSION['msj_error']) ? $_SESSION['msj_error'] : '';
+    unset($_SESSION['msj_error']);
 ?>
 <!doctype html>
     <html lang="es">
@@ -81,7 +27,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <h4 class="text-center fw-bold text-danger mb-3">Iniciar <span class="text-dark-emphasis">Sesión</span></h4>
-                                <form method="POST" action="index.php" autocomplete="off">
+                                <form method="POST" action="services/login.php" autocomplete="off">
                                     <div class="mb-3">
                                         <label for="user" class="form-label">Usuario</label>
                                         <input class="form-control" type="text" name="user" id="user" placeholder="Ingrese su usuario" autofocus required>
@@ -91,11 +37,10 @@
                                         <input class="form-control" type="password" name="password" id="password" placeholder="Ingrese su contraseña" aria-describedby="passwordHelpBlock" required>
                                     </div>
                                     <div id="passwordHelpBlock" class="form-text text-danger text-center">
-                                        <span class="fw-bold"><?php echo isset($msj_error) ? $msj_error : ''; ?></span>
+                                        <span class="fw-bold"><?php echo $msj_error; ?></span>
                                     </div>
                                     <div class="d-grid gap-2 mt-4">
                                         <input type="submit" class="btn btn-dark" value="Ingresar">
-                                        <!-- <a href="pages/movimientos.php" class="btn btn-dark">Ingresar</a> -->
                                     </div>
                                 </form>
                             </div>
