@@ -6,7 +6,7 @@
         header('location: ../index.php');
         exit();
     }
-    if($_SESSION['rol'] == 3){
+    if($_SESSION['rol'] == 1){
         header('Location: movimientos.php');
         exit();
     }
@@ -118,9 +118,7 @@
                             <select class="form-select" name="rol" id="rol" required>
                                 <option selected disabled>Seleccione...</option>
                                 <option value="0">Administrador</option>
-                                <option value="1">Coordinador</option>
-                                <option value="2">Analista</option>
-                                <option value="3">Seguridad</option>
+                                <option value="1">Analista</option>
                             </select>
                         </div>
                         <div class="col-sm-6">

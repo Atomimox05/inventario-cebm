@@ -1,9 +1,10 @@
 <?php
+    session_start();
     require('../../fpdf/fpdf.php');
     require('../../config/conex.php');
 
     if(!isset($_SESSION['id'])){
-        header('location: ../index.php');
+        header('location: ../../index.php');
         exit();
     }
 

@@ -5,10 +5,6 @@
         header('location: ../index.php');
         exit();
     }
-    if($_SESSION['rol'] == 3){
-        header('Location: movimientos.php');
-        exit();
-    }
 ?>
 
 <?php include ('../config/Header.php'); ?>
@@ -65,7 +61,7 @@
                 <select class="form-select" name="rol" id="rol" required>
                     <option disabled>Seleccione...</option>
                     <?php
-                        $roles = ["Administrador", "Coordinador", "Analista", "Seguridad"];
+                        $roles = ["Administrador", "Analista"];
                         foreach($roles as $key => $role){
                             $selected = ($user[6] == $key) ? "selected" : "";
                             echo("<option value='$key' $selected>$role</option>");

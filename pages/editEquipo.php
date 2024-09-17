@@ -5,11 +5,6 @@
         header('location: ../index.php');
         exit();
     }
-
-    if($_SESSION['rol'] == 3){
-        header('Location: movimientos.php');
-        exit();
-    }
 ?>
 
 <?php include ('../config/Header.php'); ?>

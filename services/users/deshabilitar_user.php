@@ -15,8 +15,8 @@
         $stmt -> bind_param("i", $id);
 
         if($stmt -> execute()){
-            $alert_type = "success";
-            $alert_msg = "¡El usuario ha sido deshabilitado!";
+            $alert_type = "info";
+            $alert_msg = "El usuario fue deshabilitado.";
         } else {
             $alert_type = "danger";
             $alert_msg = "Ocurrió un error al deshabilitar el usuario.";

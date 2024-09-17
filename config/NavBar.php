@@ -28,12 +28,12 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="movimientos.php">Movimientos</a>
                             </li>
-                            <?php
-                                if($rol != 3){
-                            ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="equipos.php">Equipos</a>
                             </li>
+                            <?php
+                                if($rol != 1){
+                            ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="usuarios.php">Usuarios</a>
                             </li>
