@@ -49,7 +49,7 @@
 
             $_SESSION['alert_type'] = $alert_type;
             $_SESSION['alert_msg'] = $alert_msg;
-            header("Location: ../../pages/movimientos.php");
+            header("Location: ../../pages/mantenimiento.php?equipo=" . $equipo);
             exit();
         } else {
             $alert_type = "danger";

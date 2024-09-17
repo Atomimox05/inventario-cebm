@@ -26,7 +26,7 @@
 
         $_SESSION['alert_type'] = $alert_type;
         $_SESSION['alert_msg'] = $alert_msg;
-        header("Location: ../../pages/mantenimiento.php?equipo=$equipo");
+        header("Location: ../../pages/equipos.php");
         exit();
     }
 ?>
