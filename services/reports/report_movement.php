@@ -2,6 +2,11 @@
     require('../../fpdf/fpdf.php');
     require('../../config/conex.php');
 
+    if(!isset($_SESSION['id'])){
+        header('location: ../index.php');
+        exit();
+    }
+
     $id = $_GET['id'];
 
     class PDF extends FPDF{

@@ -4,6 +4,7 @@ require('../config/conex.php');
 
 if (!isset($_SESSION['id'])) {
     header('location: ../index.php');
+    exit();
 }
 ?>
 
@@ -30,6 +31,9 @@ if (!isset($_SESSION['id'])) {
                     </div>
                 </form>
             </div>
+            <?php
+                if($_SESSION['rol'] != 3){
+            ?>
             <div class="col-sm">
                 <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#movimiento">Registar movimiento</button>
             </div>
@@ -38,6 +42,9 @@ if (!isset($_SESSION['id'])) {
                     Historial de movimientos
                 </button>
             </div>
+            <?php
+                }
+            ?>
         </div>
     </div>
     <div class="container d-flex justify-content-center mt-5">

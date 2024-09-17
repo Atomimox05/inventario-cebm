@@ -1,5 +1,9 @@
 <?php
     session_start(); // Inicia la sesión
+    if(!isset($_SESSION['id'])){
+        header('location: ../index.php');
+        exit();
+    }
     require('../../config/conex.php'); // Requiere la configuración de la base de datos
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){

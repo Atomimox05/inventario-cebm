@@ -3,6 +3,7 @@
 
     if(!isset($_SESSION['id'])){
         header('Location: ../index.php');
+        exit();
     }
 
     $nombre = $_SESSION['nombre'];
@@ -27,12 +28,18 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="movimientos.php">Movimientos</a>
                             </li>
+                            <?php
+                                if($rol != 3){
+                            ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="equipos.php">Equipos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="usuarios.php">Usuarios</a>
                             </li>
+                            <?php
+                                }
+                            ?>
                             <li class="nav-item dropdown">
                                 <button class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <?php echo $nombre.' '.$apellido; ?>
