@@ -65,7 +65,7 @@
             $pdf->Cell(100);
             $pdf->SetFont('Arial','B',9);
             $pdf->Ln(15);
-            $pdf->Cell(130,10, utf8_decode('Rango de fechas: ' . $start . ' - ' . $end), 0, 0);
+            $pdf->Cell(130,10, utf8_decode('Rango de fechas: ' . $start . ' a ' . $end), 0, 0);
             $pdf->Cell(130,10,utf8_decode('Reporte solicitado por: ' . $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] . ' - Fecha: ' . $fecha), 0, 0, 'R' );
             $pdf->Ln(15);
             $pdf->Cell(5,10,utf8_decode('#'), 1, 0, 'C');

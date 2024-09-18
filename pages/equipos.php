@@ -67,9 +67,9 @@
                             <td>
                                 <?php
                                 if ($row[4] == 0) {
-                                    echo ("Disponible");
+                                    echo ("En inventario");
                                 } else {
-                                    echo ("No disponible");
+                                    echo ("Fuera de inventario");
                                 }
                                 ?>
                             </td>
