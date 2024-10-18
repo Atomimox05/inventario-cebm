@@ -39,6 +39,7 @@
             <div class="col-sm-6">
                 <label class="form-label" for="ci">Cédula de identidad</label>
                 <input class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" value="<?php echo($user[3])?>" disabled>
+                <small class="form-text text-muted">No se puede modificar</small>
             </div>
             <div class="col-sm-6">
                 <label for="name" class="form-label">Nombre</label>
@@ -50,26 +51,22 @@
             </div>
             <div class="col-sm-6">
                 <label class="form-label" for="user">Nombre de usuario</label>
-                <input class="form-control" type="text" name="username" id="user" placeholder="Ingrese su usuario" maxlength="30" value="<?php echo($user[8])?>" required>
+                <input class="form-control" type="text" name="username" id="user" placeholder="Ingrese su usuario" maxlength="30" value="<?php echo($user[7])?>" required>
             </div>
-            <div class="col-sm-4">
-                <label class="form-label" for="carnet">N° de carnet</label>
-                <input class="form-control" type="text" name="n_carnet" id="carnet" placeholder="0000-00" value="<?php echo($user[4])?>" maxlength="7">
-            </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <label class="form-label" for="rol">Perfil</label>
                 <select class="form-select" name="rol" id="rol" required>
                     <option disabled>Seleccione...</option>
                     <?php
                         $roles = ["Administrador", "Analista"];
                         foreach($roles as $key => $role){
-                            $selected = ($user[6] == $key) ? "selected" : "";
+                            $selected = ($user[5] == $key) ? "selected" : "";
                             echo("<option value='$key' $selected>$role</option>");
                         }
                     ?>
                 </select>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <label class="form-label" for="user">Departamento</label>
                 <select class="form-select" name="departamento" id="departamento" required>
                     <option disabled>Seleccione...</option>
@@ -78,7 +75,7 @@
 
                         $res = mysqli_query($conn, "SELECT * FROM departamento");
                         while($row = mysqli_fetch_array($res)){
-                            if($user[5] == $row[0]){
+                            if($user[4] == $row[0]){
                                 ?>
                                 <option selected value="<?php echo($row[0]); ?>"><?php echo($row[1]); ?></option>
                                 <?php

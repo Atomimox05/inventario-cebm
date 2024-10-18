@@ -7,25 +7,23 @@
         $apellido = $_POST['apellido'];
         $ci = $_POST['ci'];
         $departamento = $_POST['departamento'];
-        $rol = $_POST['rol'];
-        $username = $_POST['username'];
-        $pass = $_POST['password'];
+        $cargo = $_POST['cargo'];
 
         //Encripta la contraseña usando el algoritmo de hash
         $password = password_hash($pass, PASSWORD_DEFAULT);
 
         //PREPARA LA SENTENCIA SQL
-        $sql= "INSERT INTO usuarios(nombre, apellido, ci, departamento, rol, username, password) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        $sql= "INSERT INTO empleados(nombre, apellido, ci, departamento, cargo) VALUES(?, ?, ?, ?, ?)";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param('ssssiiss', $nombre, $apellido, $ci, $departamento, $rol, $username, $password);
+        $stmt -> bind_param('sssis', $nombre, $apellido, $ci, $departamento, $cargo);
         
         //EJECUTA LA SENTENCIA SQL Y MUESTRA ALERTAS SEGÚN EL RESULTADO
         if($stmt -> execute()){
             $alert_type = "success";
-            $alert_msg = "Usuario registrado con éxito.";
+            $alert_msg = "Funcionario registrado con éxito.";
         } else {
             $alert_type = "danger";
-            $alert_msg = "Error al registrar el usuario.";
+            $alert_msg = "Error al registrar el funcionario.";
         }
 
         $_SESSION['alert_type'] = $alert_type;

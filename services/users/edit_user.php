@@ -6,14 +6,13 @@
         $id = $_POST['id'];
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
-        $n_carnet = $_POST['n_carnet'];
         $username = $_POST['username'];
         $departamento = $_POST['departamento'];
         $rol = $_POST['rol'];
 
-        $sql = "UPDATE usuarios SET nombre = ?, apellido = ?, n_carnet = ?, username = ?, departamento = ?, rol = ? WHERE id = ?";
+        $sql = "UPDATE usuarios SET nombre = ?, apellido = ?, username = ?, departamento = ?, rol = ? WHERE id = ?";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param("ssssiii", $nombre, $apellido, $n_carnet, $username, $departamento, $rol, $id);
+        $stmt -> bind_param("ssssiii", $nombre, $apellido, $username, $departamento, $rol, $id);
 
         if($stmt -> execute()){
             $alert_type = "success";

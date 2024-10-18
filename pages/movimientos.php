@@ -93,7 +93,7 @@ if (!isset($_SESSION['id'])) {
             ?>
                 <tr>
                     <td><?php echo ($contador); ?></td>
-                    <td><?php if($row[9] != "") echo ($row[9]); else echo ("-") ?></td>
+                    <td><?php if($row[8] != "") echo ($row[8]); else echo ("-") ?></td>
                     <td>
                         <?php
                             $equipo = $row[1];
@@ -112,8 +112,8 @@ if (!isset($_SESSION['id'])) {
                         ?>
                     </td>
                     <td><?php echo ($row[4]); ?></td>
+                    <td><?php echo ($row[5]); ?></td>
                     <td><?php echo ($row[6]); ?></td>
-                    <td><?php echo ($row[7]); ?></td>
                     <td>
                         <?php
                             $user = $row[2];
@@ -200,7 +200,7 @@ if (!isset($_SESSION['id'])) {
                             <div class="accordion-body">
                                 <form action="../services/movimientos/movement_exit.php" method="POST" class="row g-2">
                                     <input type="hidden" name="type" value="0"> <!-- 0 = salida, 1 = entrada -->
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <label class="form-label" for="equipo">Equipo</label>
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon4">Buscar</span>
@@ -220,10 +220,6 @@ if (!isset($_SESSION['id'])) {
                                     <div class="col-sm-6">
                                         <label class="form-label" for="responsable">Funcionario que retira</label>
                                         <input class="form-control" type="text" name="funcionario" id="responsable" maxlength="80" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="form-label" for="cargo">Cargo del funcionario</label>
-                                        <input class="form-control" type="text" name="cargo" id="cargo" maxlength="30" required>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="form-label" for="motivo">Motivo del préstamo</label>
@@ -258,10 +254,6 @@ if (!isset($_SESSION['id'])) {
                                     <div class="col-sm-6">
                                         <label for="responsable2" class="form-label">Funcionario que entrega</label>
                                         <input class="form-control" type="text" name="funcionario" id="responsable2" maxlength="80" required>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="form-label" for="cargo">Cargo del funcionario</label>
-                                        <input class="form-control" type="text" name="cargo" id="cargo" maxlength="30" required>
                                     </div>
                                     <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
                                     <div class="col-sm-12">
