@@ -111,7 +111,14 @@ if (!isset($_SESSION['id'])) {
                            }
                         ?>
                     </td>
-                    <td><?php echo ($row[4]); ?></td>
+                    <td>
+                        <?php
+                            $func = $row[4];
+                            $res4 = mysqli_query($conn, "SELECT * FROM empleados WHERE id= '$func'");
+                            $row4 = mysqli_fetch_array($res4);
+                            echo ($row4[2] . " " . $row4[3]); 
+                        ?>
+                    </td>
                     <td><?php echo ($row[5]); ?></td>
                     <td><?php echo ($row[6]); ?></td>
                     <td>
@@ -219,7 +226,18 @@ if (!isset($_SESSION['id'])) {
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="form-label" for="responsable">Funcionario que retira</label>
-                                        <input class="form-control" type="text" name="funcionario" id="responsable" maxlength="80" required>
+                                        <input class="form-control" type="text" list="funcionarios" name="funcionario" id="responsable" placeholder="Seleccione..." required>
+                                        <datalist id="funcionarios">
+                                            <?php
+                                            require('../config/conex.php');
+
+                                            $res = mysqli_query($conn, "SELECT * FROM empleados");
+                                            while ($row = mysqli_fetch_array($res)) {
+                                                if($row[6] != 1){
+                                            ?>
+                                                <option value="<?php echo ($row[0]); ?>">C.I. <?php echo ($row[1]);?> - <?php echo($row[2]);?> <?php echo($row[3]);?> - <?php echo($row[4]);?></option>
+                                            <?php }} ?>
+                                        </datalist>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="form-label" for="motivo">Motivo del préstamo</label>
@@ -251,9 +269,20 @@ if (!isset($_SESSION['id'])) {
                                         <label class="form-label" for="n_control">ID de control</label>
                                         <input type="text" name="n_control" id="n_control" class="form-control" placeholder="Ingrese el ID de control asignado" required>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <label for="responsable2" class="form-label">Funcionario que entrega</label>
-                                        <input class="form-control" type="text" name="funcionario" id="responsable2" maxlength="80" required>
+                                        <input class="form-control" type="text" list="funcionarios" name="funcionario" id="responsable" placeholder="Seleccione..." required>
+                                        <datalist id="funcionarios">
+                                            <?php
+                                            require('../config/conex.php');
+
+                                            $res = mysqli_query($conn, "SELECT * FROM empleados");
+                                            while ($row = mysqli_fetch_array($res)) {
+                                                if($row[6] != 1){
+                                            ?>
+                                                <option value="<?php echo ($row[0]); ?>">C.I. <?php echo ($row[1]);?> - <?php echo($row[2]);?> <?php echo($row[3]);?> - <?php echo($row[4]);?></option>
+                                            <?php }} ?>
+                                        </datalist>
                                     </div>
                                     <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
                                     <div class="col-sm-12">

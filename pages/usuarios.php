@@ -300,12 +300,40 @@ endif;
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
+                            <th scope="col">C.I.</th>
                             <th scope="col">Cargo</th>
                             <th scope="col">Departamento</th>
                             <th scope="col">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <?php
+                        $counter = 1;
+                        $res = mysqli_query($conn, "SELECT * FROM empleados");
+
+                        while ($row = mysqli_fetch_array($res)) {
+                            if ($row[6] != 1) {
+                        ?>
+                                <tr>
+                                    <td><?php echo ($counter); ?></td>
+                                    <td><?php echo ($row[2]); ?></td>
+                                    <td><?php echo ($row[3]); ?></td>
+                                    <td><?php echo ($row[1]); ?></td>
+                                    <td><?php echo ($row[4]); ?></td>
+                                    <td>
+                                        <?php
+                                            $idDep = $row[5];
+                                            $response = mysqli_query($conn, "SELECT * FROM departamento WHERE id= '$idDep'");
+                                            $row2 = mysqli_fetch_array($response);
+                                            echo($row2[1]);
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="confirmDisableFunc(<?php echo ($row[0]); ?>)">Deshabilitar</button>
+                                    </td>
+                                </tr>
+                            <?php $counter++;
+                            }} ?>
                     </tbody>
                 </table>
             </div>
@@ -315,8 +343,14 @@ endif;
 
 <script>
     const confirmDisable = (userId) => {
-        if (confirm("¿Estás seguro de que quieres deshabilitar este usuario?. Esta acción no se puede deshacer.")) {
+        if (confirm("¿Está seguro de que quiere deshabilitar este usuario?. Esta acción no se puede deshacer.")) {
             window.location.href = "../services/users/deshabilitar_user.php?id=" + userId;
+        }
+    }
+
+    const confirmDisableFunc = (funcionarioID) => {
+        if (confirm("¿Está seguro de que quiers deshabilitar a este funcionario?. Esta acción no se puede revertir.")) {
+            window.location.href = "../services/users/deshabilitar_funcionario.php?id=" + funcionarioID;
         }
     }
 </script>

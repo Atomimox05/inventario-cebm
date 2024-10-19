@@ -44,8 +44,8 @@
     $pdf->Ln(15);
     $pdf->SetFont('Arial','',10);
     while($row = mysqli_fetch_array($res)){
-        $pdf->Cell(100,10,'FECHA DE SALIDA DEL BIEN: '.$row[7], 1);
-        $pdf->Cell(100,10,'ID DE CONTROL: '.$row[9], 1);
+        $pdf->Cell(100,10,'FECHA DE SALIDA DEL BIEN: '.$row[6], 1);
+        $pdf->Cell(100,10,'ID DE CONTROL: '.$row[8], 1);
         $pdf->Ln();
 
         $equipo = $row[1];
@@ -57,7 +57,10 @@
         $pdf->MultiCell(200,10,utf8_decode($descripcion), 1);
         $pdf->Cell(200,10,utf8_decode('MOTIVO: '.$row[6]), 1);
         $pdf->Ln();
-        $pdf->Cell(200,10,utf8_decode('FUNCIONARIO PÚBLICO RESPONSABLE (Nombre y cargo): '.$row[4] . " - " . $row[5]), 1);
+        $func = $row[4];
+        $res4 = mysqli_query($conn, "SELECT * FROM empleados WHERE id= '$func'");
+        $row4 = mysqli_fetch_array($res4);
+        $pdf->Cell(200,10,utf8_decode('FUNCIONARIO PÚBLICO RESPONSABLE (Nombre y cargo): '.$row4[2] . " " . $row4[3] . " - ". $row4[4]), 1);
         $pdf->Ln();
         $pdf->Cell(100,10,utf8_decode('USUARIO ENCARGADO'), 1, 0, 'C');
 
@@ -76,7 +79,7 @@
         $pdf->Cell(100,25,utf8_decode('VERIFICADO (ÁREA DE SEGURIDAD Y CUSTODIA)'), 1, 0, 'C');
         $pdf->Cell(100,25, '', 1);
         $pdf->Ln();
-        $pdf->Cell(200,15,utf8_decode('OBSERVACIONES: '.$row[8]), 1);
+        $pdf->Cell(200,15,utf8_decode('OBSERVACIONES: '.$row[7]), 1);
         $pdf->Ln();
         $pdf->Cell(200,10,utf8_decode('Fecha de retorno del bien: _______/_______/_______ '), 0, 0, 'R');
         $pdf->Ln();

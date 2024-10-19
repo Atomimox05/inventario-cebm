@@ -8,14 +8,15 @@
         $ci = $_POST['ci'];
         $departamento = $_POST['departamento'];
         $cargo = $_POST['cargo'];
+        $activo = 0;
 
         //Encripta la contraseña usando el algoritmo de hash
         $password = password_hash($pass, PASSWORD_DEFAULT);
 
         //PREPARA LA SENTENCIA SQL
-        $sql= "INSERT INTO empleados(nombre, apellido, ci, departamento, cargo) VALUES(?, ?, ?, ?, ?)";
+        $sql= "INSERT INTO empleados(nombre, apellido, ci, departamento, cargo, activo) VALUES(?, ?, ?, ?, ?, ?)";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param('sssis', $nombre, $apellido, $ci, $departamento, $cargo);
+        $stmt -> bind_param('sssisi', $nombre, $apellido, $ci, $departamento, $cargo, $activo);
         
         //EJECUTA LA SENTENCIA SQL Y MUESTRA ALERTAS SEGÚN EL RESULTADO
         if($stmt -> execute()){

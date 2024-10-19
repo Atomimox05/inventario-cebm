@@ -11,16 +11,15 @@
         $equipo = $_POST['equipo'];
         $type = $_POST['type'];
         $funcionario = $_POST['funcionario'];
-        $cargo = $_POST['cargo'];
         $motivo = $_POST['motivo'];
         $observaciones = $_POST['observaciones'];
 
         // Generar número de control único
         $n_control = uniqid('', false);
 
-        $sql = "INSERT INTO movimientos (equipo, usuario, type ,funcionario, cargo, motivo, observaciones, n_control) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO movimientos (equipo, usuario, type ,funcionario, motivo, observaciones, n_control) VALUES(?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param('iiisssss', $equipo, $usuario, $type, $funcionario, $cargo, $motivo, $observaciones, $n_control);
+        $stmt -> bind_param('iiissss', $equipo, $usuario, $type, $funcionario, $motivo, $observaciones, $n_control);
 
         if($stmt -> execute()){
             $sql2 = "UPDATE equipos SET disponible = 1 WHERE id = $equipo";
