@@ -94,7 +94,15 @@ if (!isset($_SESSION['id'])) {
                         <?php echo ($mant[4]); ?>
                     </td>
                     <td>
+                    <?php
+                        if($_SESSION['rol'] == 1){
+                    ?>
+                    <small>No hay opciones disponibles</small>
+                    <?php
+                        } elseif ($_SESSION['rol'] == 0) {
+                    ?>
                         <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete(<?php echo ($mant[0]); ?>)">Eliminar</button>
+                    <?php } ?>
                     </td>
                 <?php
                     }} else {
