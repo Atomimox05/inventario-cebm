@@ -10,16 +10,16 @@
     if(isset($_GET['id'])){
         $id = $_GET['id'];
         
-        $sql = "UPDATE empleados SET activo = 1 WHERE id = ?";
+        $sql = "DELETE FROM empleados WHERE id = ?";
         $stmt = $conn -> prepare($sql);
         $stmt -> bind_param("i", $id);
 
         if($stmt -> execute()){
             $alert_type = "info";
-            $alert_msg = "El funcionario fue deshabilitado exitosamente.";
+            $alert_msg = "El funcionario fue eliminado del registro exitosamente.";
         } else {
             $alert_type = "danger";
-            $alert_msg = "Ocurrió un error al deshabilitar al funcionario.";
+            $alert_msg = "Ocurrió un error al eliminar al funcionario.";
         }
 
         $_SESSION['alert_type'] = $alert_type;

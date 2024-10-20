@@ -329,7 +329,7 @@ endif;
                                         ?>
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-danger" onclick="confirmDisableFunc(<?php echo ($row[0]); ?>)">Deshabilitar</button>
+                                        <button class="btn btn-sm btn-danger" onclick="confirmDisableFunc(<?php echo ($row[0]); ?>)">Eliminar</button>
                                     </td>
                                 </tr>
                             <?php $counter++;
@@ -349,7 +349,7 @@ endif;
     }
 
     const confirmDisableFunc = (funcionarioID) => {
-        if (confirm("¿Está seguro de que quiers deshabilitar a este funcionario?. Esta acción no se puede revertir.")) {
+        if (confirm("¿Está seguro de que quiere eliminar a este funcionario?. Esta acción no se puede revertir.")) {
             window.location.href = "../services/users/deshabilitar_funcionario.php?id=" + funcionarioID;
         }
     }
