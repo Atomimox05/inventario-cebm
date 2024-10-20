@@ -83,7 +83,7 @@
         while($row = mysqli_fetch_array($res)){
             $pdf->Cell(5,10,$contador, 1, 0, 'C');
             if($type == 0) {
-                $pdf->Cell(25,10,utf8_decode($row[9]), 1, 0, 'C');
+                $pdf->Cell(25,10,utf8_decode($row[8]), 1, 0, 'C');
             }
 
             $equipo = $row[1];
@@ -93,9 +93,15 @@
             $descripcion = $row2[1] . " - " . $row2[2];
 
             $pdf->Cell(110,10,utf8_decode($descripcion), 1);
-            $pdf->Cell(30,10,utf8_decode($row[4]), 1, 0, 'C');
+
+            $func = $row[4];
+            $res4 = mysqli_query($conn, "SELECT * FROM empleados WHERE id= '$func'");
+            $row4 = mysqli_fetch_array($res4);
+            $funcionario = $row4[2] . " " . $row4[3];
+
+            $pdf->Cell(30,10,utf8_decode($funcionario), 1, 0, 'C');
+            $pdf->Cell(30,10,utf8_decode($row[5]), 1, 0, 'C');
             $pdf->Cell(30,10,utf8_decode($row[6]), 1, 0, 'C');
-            $pdf->Cell(30,10,utf8_decode($row[7]), 1, 0, 'C');
 
             $user = $row[2];
             $res3 = mysqli_query($conn, "SELECT * FROM usuarios WHERE id = '$user'"); 

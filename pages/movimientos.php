@@ -331,6 +331,7 @@ if (!isset($_SESSION['id'])) {
                         </div>
                         <div class="col-sm-12 mt-4">
                             <div class="d-grid gap-2">
+                                <button type="reset" class="btn btn-secondary">Limpiar</button>
                                 <input class="btn btn-dark" type="submit" value="Generar reporte">
                             </div>
                         </div>

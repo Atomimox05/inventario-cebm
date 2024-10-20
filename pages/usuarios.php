@@ -48,7 +48,7 @@ if ($_SESSION['rol'] == 1) {
                 $res = mysqli_query($conn, "SELECT * FROM usuarios");
 
                 while ($row = mysqli_fetch_array($res)) {
-                    if ($row[7] != 1) {
+                    if ($row[6] != 1) {
                 ?>
                         <tr>
                             <td><?php echo ($contador); ?></td>
@@ -59,8 +59,6 @@ if ($_SESSION['rol'] == 1) {
                             <td><?php if ($row[5] == 0) {
                                     echo ("Administrador");
                                 } else if ($row[5] == 1) {
-                                    echo ("Coordinador");
-                                } else if ($row[5] == 2) {
                                     echo ("Analista");
                                 } ?></td>
                             <td>
