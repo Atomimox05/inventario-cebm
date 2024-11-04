@@ -60,9 +60,10 @@ if (!isset($_SESSION['id'])) {
     </div>
     <hr>
     <div class="container mt-4">
-        <h4 class="text-center">Historico de mantenimientos</h4>
-        <div class="container d-flex justify-content-end">
-            <a href='../services/reports/report_mantemiento.php?id=<?php echo($id_equipo); ?>' target="_blank" class="btn btn-warning text-white">Generar reporte</a>
+        
+        <div class="container d-flex justify-content-center">
+            <h4 class="text-center me-3">Historico de mantenimientos</h4>
+            <a href='../services/reports/report_mantenimiento.php?id=<?php echo($id_equipo); ?>' target="_blank" class="btn btn-sm btn-warning text-white">Generar reporte</a>
         </div>
         <table class="table table-hover text-center mt-3">
             <thead>

@@ -5,7 +5,7 @@
         exit();
     }
 
-    $id_equipo = $_GET['id_equipo'];
+    $id_equipo = $_GET['id'];
 
     require('../../fpdf/fpdf.php');
     require('../../config/conex.php');
@@ -35,7 +35,7 @@
         }
     }
 
-    $sql = "SELECT * FROM mantenimientos WHERE id = $id_equipo";
+    $sql = "SELECT * FROM mantenimientos WHERE equipo = $id_equipo";
     $res = mysqli_query($conn, $sql);
 
     // Creación del objeto de la clase heredada
@@ -47,55 +47,45 @@
     $pdf->Cell(60,10,'REPORTE DE MANTENIMIENTO A EQUIPOS', 0, 0, 'C');
     $pdf->Cell(100);
     $pdf->SetFont('Arial','B',9);
-    $pdf->Ln(15);
+    $pdf->Ln(12);
     $pdf->Cell(60,10);
     $pdf->Cell(200,10,utf8_decode('Reporte solicitado por: ' . $_SESSION['nombre'] . ' ' . $_SESSION['apellido'] . ' - Fecha: ' . $fecha), 0, 0, 'R' );
     $pdf->Ln(15);
     $pdf->Cell(10,10,utf8_decode('#'), 1, 0, 'C');
-    $pdf->Cell(50,10,'Equipo', 1, 0, 'C');
-    $pdf->Cell(100,10,utf8_decode('Descripción'), 1, 0, 'C');
-    $pdf->Cell(30,10,utf8_decode('N° de bien'), 1, 0, 'C');
-    $pdf->Cell(30,10,utf8_decode('Disponibilidad'), 1, 0, 'C');
-    $pdf->Cell(40,10,utf8_decode('Integridad'), 1, 0, 'C');
+    $pdf->Cell(120,10,'Detalles del equipo', 1, 0, 'C');
+    $pdf->Cell(30,10,utf8_decode('Fecha'), 1, 0, 'C');
+    $pdf->Cell(30,10,utf8_decode('Responsable'), 1, 0, 'C');
+    $pdf->Cell(70,10,utf8_decode('Observaciones'), 1, 0, 'C');
     $pdf->Ln();
 
     $pdf->SetFont('Arial','',9);
     while($row = mysqli_fetch_array($res)){
-        if ($row[6] != 1) {
-            $descripcion = $row[2];
-            if ($row[4] == 0) {
-                $disponible = ("Disponible");
-            } else {
-                $disponible = ("No disponible");
-            }
-            switch ($row[5]) {
-                case 0:
-                    $integridad = ("Excelentes condiciones");
-                    break;
-                case 1:
-                    $integridad = ("Buenas condiciones");
-                    break;
-                case 2:
-                    $integridad = ("Condiciones regulares");
-                    break;
-                case 3:
-                    $integridad = ("Malas condiciones");
-                    break;
-            }
-            $pdf->Cell(10,10,$contador, 1, 0, 'C');
-            $pdf->Cell(50,10,utf8_decode($row[1]), 1, 0, 'C');
-            $pdf->Cell(100,10,utf8_decode($descripcion), 1, 0, 'C');
-            $pdf->Cell(30,10,utf8_decode($row[3]), 1, 0, 'C');
-            $pdf->Cell(30,10,utf8_decode($disponible), 1, 0, 'C');
-            $pdf->Cell(40,10,utf8_decode($integridad), 1, 0, 'C');
-            $pdf->Ln();
-            $contador++;
-        }
+        $pdf->Cell(10,10,$contador, 1, 0, 'C');
+
+        $equipo = $row[1];
+        $res2 = mysqli_query($conn, "SELECT * FROM equipos WHERE id = '$row[1]'"); 
+        $row2 = mysqli_fetch_array($res2);
+
+        $descripcion = $row2[1] . " - " . $row2[2];
+
+        $pdf->Cell(120,10,utf8_decode($descripcion), 1, 0, 'C');
+        $pdf->Cell(30,10,utf8_decode($row[2]), 1, 0, 'C');
+
+        $user = $row[3];
+        $res3 = mysqli_query($conn, "SELECT * FROM usuarios WHERE id = '$user'"); 
+        $row3 = mysqli_fetch_array($res3);
+
+        $pdf->Cell(30,10,utf8_decode($row3[1] . " " . $row3[2]), 1, 0, 'C');
+        $pdf->Cell(70,10,utf8_decode($row[4]), 1, 0, 'C');
+        $pdf->Ln();
+        $contador++;
     }
     $pdf->Ln(50);
     $pdf->Cell(60,10);
-    $pdf->Cell(140,10,utf8_decode('VERIFICADO (ÁREA DE BIENES Y ALMACÉN)'), 'T', 0, 'C');
+    $pdf->Cell(140,10,utf8_decode('VERIFICADO POR ENCARGADO'), 'T', 0, 'C');
     $pdf->Cell(60,10);
+    $pdf->Close();
+    $pdf->Output();
     $pdf->Close();
     $pdf->Output();
 ?>
