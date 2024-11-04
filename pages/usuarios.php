@@ -18,11 +18,11 @@ if ($_SESSION['rol'] == 1) {
     <h3 class="text-center">Gestión de usuarios</h3>
     <div class="container mt-5">
         <div class="d-flex row justify-content-end">
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#usuario">
                     Crear nuevo usuario
                 </button>
-                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#departamentos">Departamentos</button>
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#departamentos">Direcciones</button>
                 <button type="button" class="btn btn-sm text-white btn-warning" data-bs-toggle="modal" data-bs-target="#funcionarios">Listado de personal</button>
             </div>
         </div>
@@ -123,7 +123,7 @@ endif;
                         </select>
                     </div>
                     <div class="col-sm-6">
-                        <label class="form-label" for="user">Departamento</label>
+                        <label class="form-label" for="user">Dirección adscrita</label>
                         <select class="form-select" name="departamento" id="departamento" required>
                             <option selected disabled>Seleccione...</option>
                             <?php
@@ -158,22 +158,22 @@ endif;
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Departamentos</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Direcciones</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="container">
                     <form class="row align-items-center" action="../services/departamentos/save_dep.php" method="POST">
                         <div class="col-sm-5">
-                            <label class="form-label" for="dep_name">Nombre del departamento</label>
-                            <input type="text" class="form-control" name="name" id="dep_name" maxlength="60" placeholder="Ingrese el nombre del departamento" required>
+                            <label class="form-label" for="dep_name">Nombre de la dirección</label>
+                            <input type="text" class="form-control" name="name" id="dep_name" maxlength="60" placeholder="Ingrese el nombre de la dirección" required>
                         </div>
                         <div class="col-sm-5">
-                            <label for="responsable" class="form-label">Responsable del departamento</label>
+                            <label for="responsable" class="form-label">Responsable de la dirección</label>
                             <input type="text" class="form-control" name="responsable_dep" id="responsable" maxlength="80" placeholder="Ingrese el nombre del responsable" required>
                         </div>
                         <div class="col-sm-2">
-                            <button type="submit" class="btn btn-sm btn-dark">Registrar departamento</button>
+                            <button type="submit" class="btn btn-sm btn-dark">Registrar dirección</button>
                         </div>
                     </form>
                 </div>
@@ -268,7 +268,7 @@ endif;
                                         <input class="form-control" maxlength="50" name="cargo" type="text" required>
                                     </div>
                                     <div class="col-sm-4">
-                                        <label class="form-label" for="">Departamento</label>
+                                        <label class="form-label" for="">Dirección adscrita</label>
                                         <select class="form-select" name="departamento" required>
                                             <option selected disabled>Seleccione...</option>
                                             <?php
@@ -300,7 +300,7 @@ endif;
                             <th scope="col">Apellido</th>
                             <th scope="col">C.I.</th>
                             <th scope="col">Cargo</th>
-                            <th scope="col">Departamento</th>
+                            <th scope="col">Dirección adscrita</th>
                             <th scope="col">Opciones</th>
                         </tr>
                     </thead>

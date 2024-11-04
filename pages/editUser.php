@@ -67,7 +67,7 @@
                 </select>
             </div>
             <div class="col-sm-6">
-                <label class="form-label" for="user">Departamento</label>
+                <label class="form-label" for="user">Dirección adscrita</label>
                 <select class="form-select" name="departamento" id="departamento" required>
                     <option disabled>Seleccione...</option>
                     <?php
