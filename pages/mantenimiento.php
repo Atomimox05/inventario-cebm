@@ -60,8 +60,11 @@ if (!isset($_SESSION['id'])) {
     </div>
     <hr>
     <div class="container mt-4">
-        <h5 class="text-center">Historico de mantenimientos</h5>
-        <table class="table table-hover text-center mt-4">
+        <h4 class="text-center">Historico de mantenimientos</h4>
+        <div class="container d-flex justify-content-end">
+            <a href='../services/reports/report_mantemiento.php?id=<?php echo($id_equipo); ?>' target="_blank" class="btn btn-warning text-white">Generar reporte</a>
+        </div>
+        <table class="table table-hover text-center mt-3">
             <thead>
                 <tr>
                     <th scope="col">Fecha del mantenimiento</th>
