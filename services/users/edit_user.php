@@ -4,15 +4,16 @@
     
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $id = $_POST['id'];
+        $ci = $_POST['ci'];
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $username = $_POST['username'];
         $departamento = $_POST['departamento'];
         $rol = $_POST['rol'];
 
-        $sql = "UPDATE usuarios SET nombre = ?, apellido = ?, username = ?, departamento = ?, rol = ? WHERE id = ?";
+        $sql = "UPDATE usuarios SET ci = ?, nombre = ?, apellido = ?, username = ?, departamento = ?, rol = ? WHERE id = ?";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param("ssssiii", $nombre, $apellido, $username, $departamento, $rol, $id);
+        $stmt -> bind_param("ssssiii", $ci, $nombre, $apellido, $username, $departamento, $rol, $id);
 
         if($stmt -> execute()){
             $alert_type = "success";

@@ -38,8 +38,7 @@
             <input type="hidden" name="id" value="<?php echo($id)?>">
             <div class="col-sm-6">
                 <label class="form-label" for="ci">Cédula de identidad</label>
-                <input class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" value="<?php echo($user[3])?>" disabled>
-                <small class="form-text text-muted">No se puede modificar</small>
+                <input class="form-control" name="ci" id="ci" maxlength="8" placeholder="14000000" value="<?php echo($user[3])?>">
             </div>
             <div class="col-sm-6">
                 <label for="name" class="form-label">Nombre</label>

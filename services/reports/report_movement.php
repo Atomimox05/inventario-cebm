@@ -55,7 +55,7 @@
         $descripcion = "DESCRIPCIÓN DEL BIEN:\n" . $row2[1] . " - " . $row2[2] . "\nN° de bien: " . $row2[3];
 
         $pdf->MultiCell(200,10,utf8_decode($descripcion), 1);
-        $pdf->Cell(200,10,utf8_decode('MOTIVO: '.$row[6]), 1);
+        $pdf->Cell(200,10,utf8_decode('MOTIVO: '.$row[5]), 1);
         $pdf->Ln();
         $func = $row[4];
         $res4 = mysqli_query($conn, "SELECT * FROM empleados WHERE id= '$func'");
