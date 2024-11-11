@@ -25,7 +25,7 @@ if (!isset($_SESSION['id'])) {
                         <?php } else { ?>
                         <span class="input-group-text" id="basic-addon2">Buscar</span>
                         <?php } ?>
-                        <input type="search" name="search" class="form-control" placeholder="ID de control, funcionario, motivo">
+                        <input type="search" name="search" class="form-control" placeholder="ID de control o motivo">
                         <input type="date" name="date" class="form-control" placeholder="Fecha">
                         <button class="btn btn-warning text-light" type="submit" id="button-addon2">Consultar</button>
                     </div>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['id'])) {
                     $sql = "SELECT * FROM movimientos WHERE 1=1";
 
                     if (!empty($search)) {
-                        $sql .= " AND (n_control LIKE '%$search%' OR motivo LIKE '%$search%' OR cargo LIKE '%$search%' OR funcionario LIKE '%$search%')";
+                        $sql .= " AND (n_control LIKE '%$search%' OR motivo LIKE '%$search%')";
                     }
 
                     if (!empty($date)) {
@@ -323,11 +323,11 @@ if (!isset($_SESSION['id'])) {
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="start_date">Desde</label>
-                            <input class="form-control" type="date" min="2024-09-01" name="start_date" id="start_date">
+                            <input class="form-control" type="date" min="2024-09-01" name="start_date" id="start_date" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="form-label" for="end_date">Hasta</label>
-                            <input class="form-control" type="date" name="end_date" id="end_date">
+                            <input class="form-control" type="date" name="end_date" id="end_date" required>
                         </div>
                         <div class="col-sm-12 mt-4">
                             <div class="d-grid gap-2">

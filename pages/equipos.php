@@ -15,9 +15,15 @@
     <div class="container mt-5">
         <div class="d-flex row justify-content-between text-center">
             <div class="col-sm-8">
-                <form action="equipos.php" method="GET" autocomplete="off">
+                <form action="equipos.php" method="POST" autocomplete="off">
                     <div class="input-group">
+                        <?php
+                            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        ?>
+                            <a class="input-group-text text-decoration-none bg-secondary text-light" href="equipos.php" id="basic-addon2">< Volver</a>
+                        <?php } else { ?>
                         <span class="input-group-text" id="basic-addon2">Buscar</span>
+                        <?php } ?>
                         <input type="search" class="form-control" name="search" placeholder="Nombre, descripción o n° de bien">
                         <input class="btn btn-warning text-light" type="submit" id="button-addon2" value="Consultar">
                     </div>
@@ -45,85 +51,86 @@
             <tbody>
                 <?php
                 $contador = 1;
+                $res = null;
                 require('../config/conex.php');
 
-                if (isset($_GET['search'])) {
-                    $search = $_GET['search'];
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $search = $_POST['search'];
 
-                    $sql = "SELECT * FROM equipos WHERE (equipo LIKE '%$search%' OR descripcion LIKE '%$search%' OR n_bien LIKE '%$search%')";
-                    $res = mysqli_query($conn, $sql);
+                    $sql = "SELECT * FROM equipos WHERE 1=1";
+                    
+                    if (!empty($search)) {
+                        $sql .= " AND (equipo LIKE '%$search%' OR descripcion LIKE '%$search%' OR n_bien LIKE '%$search%')";
+                    }
                 } else {
-                    $res = mysqli_query($conn, "SELECT * FROM equipos");
+                    $sql = "SELECT * FROM equipos";
                 }
 
-                while ($row = mysqli_fetch_array($res)) {
-                    if ($row[6] != 1) {
+                $res = $conn->query($sql);
+
+                if($res != null) {
+                    if($res->num_rows > 0){
+                        while ($row = mysqli_fetch_array($res)) {
+                            if ($row[6] != 1) {
                 ?>
-                        <tr>
-                            <td><?php echo ($contador); ?></td>
-                            <td><?php echo ($row[1]); ?></td>
-                            <td class="text-warp"><?php echo ($row[2]); ?></td>
-                            <td><?php echo ($row[3]); ?></td>
-                            <td>
-                                <?php
-                                if ($row[4] == 0) {
-                                    echo ("En inventario");
-                                } else {
-                                    echo ("Fuera de inventario");
-                                }
-                                ?>
-                            </td>
-                            <td>
-                                <?php
-                                switch ($row[5]) {
-                                    case 0:
-                                        echo ("Excelentes condiciones");
-                                        break;
-                                    case 1:
-                                        echo ("Buenas condiciones");
-                                        break;
-                                    case 2:
-                                        echo ("Condiciones regulares");
-                                        break;
-                                    case 3:
-                                        echo ("Malas condiciones");
-                                        break;
-                                }
-                                ?>
-                            </td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <div class="btn-group" role="group">
-                                        <a href="editEquipo.php?id=<?php echo ($row[0]); ?>" type="button" class="btn btn-sm btn-dark">Editar</a>
-                                        <button type="button" class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo ($row[0]); ?>)">Desincorporar</button>
-                                    </div>
-                                    <a href="mantenimiento.php?equipo=<?php echo ($row[0]); ?>" type="button" class="btn btn-sm btn-warning text-light">Mantenimientos</a>
+                    <tr>
+                        <td><?php echo ($contador); ?></td>
+                        <td><?php echo ($row[1]); ?></td>
+                        <td class="text-warp"><?php echo ($row[2]); ?></td>
+                        <td><?php echo ($row[3]); ?></td>
+                        <td>
+                            <?php
+                            if ($row[4] == 0) {
+                                echo ("En inventario");
+                            } else {
+                                echo ("Fuera de inventario");
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            switch ($row[5]) {
+                                case 0:
+                                    echo ("Excelentes condiciones");
+                                    break;
+                                case 1:
+                                    echo ("Buenas condiciones");
+                                    break;
+                                case 2:
+                                    echo ("Condiciones regulares");
+                                    break;
+                                case 3:
+                                    echo ("Malas condiciones");
+                                    break;
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <div class="btn-group" role="group">
+                                    <a href="editEquipo.php?id=<?php echo ($row[0]); ?>" type="button" class="btn btn-sm btn-dark">Editar</a>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDisable(<?php echo ($row[0]); ?>)">Desincorporar</button>
                                 </div>
-                            </td>
-                        </tr>
-                <?php $contador++;
-                    }
-                } ?>
+                                <a href="mantenimiento.php?equipo=<?php echo ($row[0]); ?>" type="button" class="btn btn-sm btn-warning text-light">Mantenimientos</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php 
+                    $contador++;
+                    }}} else {
+                ?>
+                    <tr>
+                        <td colspan="7">
+                            <div class="alert alert-secondary mb-0" role="alert">
+                                No se encontraron resultados. Intente con otros filtros.
+                            </div>
+                        </td>
+                    </tr>
+                <?php }} ?>
             </tbody>
         </table>
     </div>
 </section>
-
-<!-- <section class="mb-4">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-            <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-</section> -->
 
 <?php if (isset($_SESSION['alert_msg'])): ?>
     <footer class="container fixed-bottom absolute-bottom">
