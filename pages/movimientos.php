@@ -211,33 +211,29 @@ if (!isset($_SESSION['id'])) {
                                         <label class="form-label" for="equipo">Equipo</label>
                                         <div class="input-group">
                                             <span class="input-group-text" id="basic-addon4">Buscar</span>
-                                            <input class="form-control" list="equipos" id="equipo" name="equipo" placeholder="Seleccione..." required/>
-                                            <datalist id="equipos">
+                                            <select class="form-select" name="equipo" id="equipo" required>
+                                                <option value="" selected disabled>Seleccione...</option>
                                                 <?php
-                                                    require('../config/conex.php');
-
                                                     $res = mysqli_query($conn, "SELECT id,equipo, descripcion, n_bien FROM equipos WHERE disponible = 0 AND activo = 0");//Busca solo equipos que esten disponibles en inventario y activos
                                                     while($row = mysqli_fetch_array($res)){
                                                     ?>
                                                     <option value="<?php echo($row[0]); ?>">N° de bien: <?php echo($row[3]); ?> - <?php echo($row[1]); ?>, <?php echo($row[2]); ?></option>
                                                 <?php } ?>
-                                            </datalist>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label class="form-label" for="responsable">Funcionario que retira</label>
-                                        <input class="form-control" type="text" list="funcionarios" name="funcionario" id="responsable" placeholder="Seleccione..." required>
-                                        <datalist id="funcionarios">
+                                        <label for="responsable" class="form-label">Funcionario que retira</label>
+                                        <select class="form-select" name="funcionario" id="responsable" aria-placeholder="Seleccione..." required>
+                                            <option value="" selected disabled>Seleccione...</option>
                                             <?php
-                                            require('../config/conex.php');
-
-                                            $res = mysqli_query($conn, "SELECT * FROM empleados");
-                                            while ($row = mysqli_fetch_array($res)) {
-                                                if($row[6] != 1){
+                                                $res = mysqli_query($conn, "SELECT * FROM empleados");
+                                                while ($row = mysqli_fetch_array($res)) {
+                                                    if($row[6] != 1){
                                             ?>
                                                 <option value="<?php echo ($row[0]); ?>">C.I. <?php echo ($row[1]);?> - <?php echo($row[2]);?> <?php echo($row[3]);?> - <?php echo($row[4]);?></option>
                                             <?php }} ?>
-                                        </datalist>
+                                        </select>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="form-label" for="motivo">Motivo del préstamo</label>
@@ -270,19 +266,17 @@ if (!isset($_SESSION['id'])) {
                                         <input type="text" name="n_control" id="n_control" class="form-control" placeholder="Ingrese el ID de control asignado" required>
                                     </div>
                                     <div class="col-sm-12">
-                                        <label for="responsable2" class="form-label">Funcionario que entrega</label>
-                                        <input class="form-control" type="text" list="funcionarios" name="funcionario" id="responsable" placeholder="Seleccione..." required>
-                                        <datalist id="funcionarios">
+                                        <label for="responsable" class="form-label">Funcionario que entrega</label>
+                                        <select class="form-select" name="funcionario" id="responsable" required>
+                                            <option value="" selected disabled>Seleccione...</option>
                                             <?php
-                                            require('../config/conex.php');
-
-                                            $res = mysqli_query($conn, "SELECT * FROM empleados");
-                                            while ($row = mysqli_fetch_array($res)) {
-                                                if($row[6] != 1){
+                                                $res = mysqli_query($conn, "SELECT * FROM empleados");
+                                                while ($row = mysqli_fetch_array($res)) {
+                                                    if($row[6] != 1){
                                             ?>
                                                 <option value="<?php echo ($row[0]); ?>">C.I. <?php echo ($row[1]);?> - <?php echo($row[2]);?> <?php echo($row[3]);?> - <?php echo($row[4]);?></option>
                                             <?php }} ?>
-                                        </datalist>
+                                        </select>
                                     </div>
                                     <!-- La fecha se obtiene al momento de enviar la solicitud al servidor -->
                                     <div class="col-sm-12">
