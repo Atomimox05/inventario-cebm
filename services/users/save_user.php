@@ -17,7 +17,7 @@
         //PREPARA LA SENTENCIA SQL
         $sql= "INSERT INTO usuarios(nombre, apellido, ci, departamento, rol, username, password) VALUES(?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn -> prepare($sql);
-        $stmt -> bind_param('ssssiiss', $nombre, $apellido, $ci, $departamento, $rol, $username, $password);
+        $stmt -> bind_param('sssiiss', $nombre, $apellido, $ci, $departamento, $rol, $username, $password);
         
         //EJECUTA LA SENTENCIA SQL Y MUESTRA ALERTAS SEGÚN EL RESULTADO
         if($stmt -> execute()){
